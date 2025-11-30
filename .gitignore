@@ -10,3 +10,4 @@ coverage/
 typechain-types/
 venv/
 .vercel
+.env*.local
