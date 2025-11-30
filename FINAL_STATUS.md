@@ -10,7 +10,7 @@
 ## 🌐 Live Demo
 
 **Production URL:**  
-https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 
 **Alternative Access:**  
 If you need to redeploy to your specific Vercel account (`idcuq-santosos-projects`):
@@ -39,7 +39,7 @@ If you need to redeploy to your specific Vercel account (`idcuq-santosos-project
 - 55+ commits
 
 ### 2. Live Demo ✅
-**URL:** https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+**URL:** https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 
 **Features:**
 - Beautiful responsive UI
@@ -100,7 +100,7 @@ If you need to redeploy to your specific Vercel account (`idcuq-santosos-project
 **Project Name:** Smart Contract 2.0 - AI-Enhanced Smart Contracts on Linera
 
 **Live Demo:**  
-https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 
 **Repository:**  
 https://github.com/IdcuqS07/smart-contract-2.0
@@ -247,7 +247,7 @@ working AI functionality and production-ready smart contract code.
 **Developer:** Idcuq Sant
 
 **Links:**
-- **Live Demo:** https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+- **Live Demo:** https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 - **Repository:** https://github.com/IdcuqS07/smart-contract-2.0
 - **Issues:** https://github.com/IdcuqS07/smart-contract-2.0/issues
 - **Documentation:** See repository README
@@ -294,7 +294,7 @@ integration can be completed in 2-3 hours once Linera CLI becomes available.
 
 **Status:** ✅ **ALL READY - SUBMIT NOW!** 🚀
 
-**Live Demo:** https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app  
+**Live Demo:** https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app  
 **Repository:** https://github.com/IdcuqS07/smart-contract-2.0  
 **Submission Doc:** SUBMISSION.md
 

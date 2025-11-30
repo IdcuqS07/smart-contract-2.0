@@ -123,7 +123,7 @@ After successful deployment, you should see:
 
 **Find and replace:**
 ```
-OLD: https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+OLD: https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 NEW: <your-new-production-url>
 ```
 

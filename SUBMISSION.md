@@ -2,7 +2,7 @@
 
 ## 🌐 Live Demo
 
-**Production URL:** https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+**Production URL:** https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 
 **Status:** ✅ Live and Accessible
 
@@ -144,7 +144,7 @@ Combining three powerful technologies:
 ## 🧪 How to Test
 
 ### Option 1: Live Demo (Recommended)
-1. Visit: https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+1. Visit: https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
 2. Explore the interface
 3. Try AI predictions with different models
 4. View transaction history
@@ -251,7 +251,7 @@ Plus 10+ additional documentation files covering:
 
 | Resource | URL |
 |----------|-----|
-| **Live Demo** | https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app |
+| **Live Demo** | https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app |
 | **GitHub Repository** | https://github.com/IdcuqS07/smart-contract-2.0 |
 | **Documentation** | See repository README |
 | **Issues** | https://github.com/IdcuqS07/smart-contract-2.0/issues |
@@ -364,4 +364,4 @@ The smart contract is **fully developed and ready for immediate deployment** to 
 
 **Thank you for considering Smart Contract 2.0! 🚀**
 
-**Live Demo:** https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
+**Live Demo:** https://smartcontract2-linera-xor3ogqe9-idcuq-santosos-projects.vercel.app
