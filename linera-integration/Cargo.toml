@@ -1,0 +1,28 @@
+[package]
+name = "smart-contract-2-linera"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+async-graphql = "7.0"
+async-trait = "0.1"
+bcs = "0.1"
+linera-base = { git = "https://github.com/linera-io/linera-protocol.git" }
+linera-sdk = { git = "https://github.com/linera-io/linera-protocol.git" }
+linera-views = { git = "https://github.com/linera-io/linera-protocol.git" }
+serde = { version = "1.0", features = ["derive"] }
+thiserror = "1.0"
+
+[dev-dependencies]
+linera-sdk = { git = "https://github.com/linera-io/linera-protocol.git", features = ["test"] }
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[[bin]]
+name = "smart-contract-2-linera"
+path = "src/contract.rs"
+
+[[bin]]
+name = "smart-contract-2-service"
+path = "src/service.rs"

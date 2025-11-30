@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Connection - Smart Contract 2.0</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .test-card {
+            background: white;
+            padding: 20px;
+            margin: 10px 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .pending { background: #fff3cd; color: #856404; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #5568d3; }
+        pre {
+            background: #f8f9fa;
+            padding: 10px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Test Koneksi Service</h1>
+    
+    <div class="test-card">
+        <h2>1. Test AI Engine (Port 5001)</h2>
+        <button onclick="testAI()">Test AI Engine</button>
+        <div id="aiResult"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>2. Test Oracle Service (Port 3002)</h2>
+        <button onclick="testOracle()">Test Oracle</button>
+        <div id="oracleResult"></div>
+    </div>
+
+    <div class="test-card">
+        <h2>3. Test Full Flow</h2>
+        <button onclick="testFullFlow()">Test Prediksi AI</button>
+        <div id="fullResult"></div>
+    </div>
+
+    <script>
+        async function testAI() {
+            const resultDiv = document.getElementById('aiResult');
+            resultDiv.innerHTML = '<div class="status pending">⏳ Testing AI Engine...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5001/health');
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="status success">
+                        ✅ AI Engine Connected!
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ AI Engine Error: ${error.message}
+                        <br><br>
+                        <strong>Solusi:</strong>
+                        <ul>
+                            <li>Pastikan AI Engine berjalan: <code>./venv/bin/python ai-engine/main.py</code></li>
+                            <li>Check port 5001 tidak digunakan aplikasi lain</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        async function testOracle() {
+            const resultDiv = document.getElementById('oracleResult');
+            resultDiv.innerHTML = '<div class="status pending">⏳ Testing Oracle Service...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:3002/health');
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="status success">
+                        ✅ Oracle Service Connected!
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Oracle Service Error: ${error.message}
+                        <br><br>
+                        <strong>Solusi:</strong>
+                        <ul>
+                            <li>Pastikan Oracle berjalan: <code>node oracle-service/server.js</code></li>
+                            <li>Check port 3002 tidak digunakan aplikasi lain</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        async function testFullFlow() {
+            const resultDiv = document.getElementById('fullResult');
+            resultDiv.innerHTML = '<div class="status pending">⏳ Testing Full Flow...</div>';
+            
+            try {
+                // Test AI prediction
+                const aiResponse = await fetch('http://localhost:5001/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model_type: 'price_prediction',
+                        data: { prices: [100, 105, 110, 108, 112] }
+                    })
+                });
+                const aiData = await aiResponse.json();
+                
+                // Test Oracle
+                const oracleResponse = await fetch('http://localhost:3002/request-prediction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contractId: 1,
+                        modelType: 'price_prediction',
+                        data: { prices: [100, 105, 110, 108, 112] },
+                        submitToChain: false
+                    })
+                });
+                const oracleData = await oracleResponse.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="status success">
+                        ✅ Full Flow Working!
+                        <br><br>
+                        <strong>AI Prediction:</strong>
+                        <pre>${JSON.stringify(aiData, null, 2)}</pre>
+                        <br>
+                        <strong>Oracle Response:</strong>
+                        <pre>${JSON.stringify(oracleData, null, 2)}</pre>
+                    </div>
+                `;
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="status error">
+                        ❌ Full Flow Error: ${error.message}
+                        <br><br>
+                        <strong>Troubleshooting:</strong>
+                        <ul>
+                            <li>Test AI Engine dan Oracle secara terpisah dulu</li>
+                            <li>Check browser console (F12) untuk detail error</li>
+                            <li>Pastikan semua service berjalan</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        // Auto-test on load
+        window.onload = function() {
+            console.log('🔍 Smart Contract 2.0 - Connection Test');
+            console.log('Testing services...');
+        };
+    </script>
+</body>
+</html>

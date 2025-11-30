@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Contract 2.0 - AI Enhanced Blockchain</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        .header { text-align: center; color: white; margin-bottom: 40px; }
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        .model-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        .model-card:hover { transform: translateY(-5px); }
+        .model-card h3 { margin-bottom: 10px; }
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 5px;
+        }
+        button:hover { background: #5568d3; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .result {
+            background: #f0f0f0;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            display: none;
+        }
+        .result.show { display: block; }
+        .status { padding: 10px; border-radius: 5px; margin: 10px 0; }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
+        .loading { display: none; text-align: center; padding: 20px; }
+        .loading.show { display: block; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🤖 Smart Contract 2.0</h1>
+            <p>AI-Enhanced Blockchain Contracts</p>
+        </div>
+
+        <div class="card">
+            <h2>📝 Buat Kontrak Adaptif</h2>
+            <input type="text" id="contractType" placeholder="Tipe Kontrak (e.g., insurance, loan)">
+            <input type="number" id="threshold" placeholder="Threshold Value">
+            <button onclick="createContract()">Buat Kontrak</button>
+            <div id="createResult" class="result"></div>
+        </div>
+
+        <div class="card">
+            <h2>🤖 Model AI Tersedia</h2>
+            <div class="grid">
+                <div class="model-card" onclick="selectModel('price_prediction')">
+                    <h3>📈 Prediksi Harga</h3>
+                    <p>Prediksi harga aset berdasarkan data historis</p>
+                </div>
+                <div class="model-card" onclick="selectModel('risk_analysis')">
+                    <h3>⚠️ Analisis Risiko</h3>
+                    <p>Evaluasi risiko transaksi dan kontrak</p>
+                </div>
+                <div class="model-card" onclick="selectModel('fraud_detection')">
+                    <h3>🔍 Deteksi Fraud</h3>
+                    <p>Identifikasi aktivitas mencurigakan</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h2>🔮 Request Prediksi AI</h2>
+            <input type="number" id="contractId" placeholder="Contract ID">
+            <select id="modelType">
+                <option value="">Pilih Model AI</option>
+                <option value="price_prediction">Prediksi Harga</option>
+                <option value="risk_analysis">Analisis Risiko</option>
+                <option value="fraud_detection">Deteksi Fraud</option>
+            </select>
+            <textarea id="inputData" placeholder='Input Data (JSON format, e.g., {"prices": [100, 105, 110]})' rows="4"></textarea>
+            <label><input type="checkbox" id="submitToChain"> Submit ke Blockchain</label>
+            <br>
+            <button onclick="requestPrediction()">Request Prediksi</button>
+            <div class="loading" id="loading">⏳ Processing...</div>
+            <div id="predictionResult" class="result"></div>
+        </div>
+    </div>
+
+    <script>
+        // Auto-detect API URL
+        const ORACLE_URL = window.location.origin + '/api/oracle';
+
+        function selectModel(model) {
+            document.getElementById('modelType').value = model;
+        }
+
+        async function createContract() {
+            const contractType = document.getElementById('contractType').value;
+            const threshold = document.getElementById('threshold').value;
+            const resultDiv = document.getElementById('createResult');
+
+            if (!contractType || !threshold) {
+                resultDiv.innerHTML = '<div class="status error">Mohon isi semua field</div>';
+                resultDiv.classList.add('show');
+                return;
+            }
+
+            resultDiv.innerHTML = '<div class="status">📝 Demo: Contract akan dibuat di blockchain...</div>';
+            resultDiv.classList.add('show');
+
+            setTimeout(() => {
+                const contractId = Math.floor(Math.random() * 1000) + 1;
+                resultDiv.innerHTML = `
+                    <div class="status success">
+                        ✅ Kontrak berhasil dibuat!<br>
+                        <strong>Contract ID:</strong> ${contractId}<br>
+                        <strong>Type:</strong> ${contractType}<br>
+                        <strong>Threshold:</strong> ${threshold}
+                    </div>
+                `;
+            }, 1000);
+        }
+
+        async function requestPrediction() {
+            const contractId = document.getElementById('contractId').value;
+            const modelType = document.getElementById('modelType').value;
+            const inputData = document.getElementById('inputData').value;
+            const submitToChain = document.getElementById('submitToChain').checked;
+            const resultDiv = document.getElementById('predictionResult');
+            const loadingDiv = document.getElementById('loading');
+
+            if (!contractId || !modelType) {
+                resultDiv.innerHTML = '<div class="status error">Mohon isi Contract ID dan pilih Model</div>';
+                resultDiv.classList.add('show');
+                return;
+            }
+
+            let data = {};
+            if (inputData) {
+                try {
+                    data = JSON.parse(inputData);
+                } catch (e) {
+                    resultDiv.innerHTML = '<div class="status error">Invalid JSON format</div>';
+                    resultDiv.classList.add('show');
+                    return;
+                }
+            } else {
+                if (modelType === 'price_prediction') {
+                    data = { prices: [100, 105, 110, 108, 112] };
+                } else if (modelType === 'risk_analysis') {
+                    data = { amount: 5000, history_score: 75, volatility: 0.3 };
+                } else if (modelType === 'fraud_detection') {
+                    data = { amount: 10000, user_history: [1000, 1200, 1100], speed: 5 };
+                }
+            }
+
+            loadingDiv.classList.add('show');
+            resultDiv.classList.remove('show');
+
+            try {
+                const response = await fetch(`${ORACLE_URL}/request-prediction`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contractId: parseInt(contractId),
+                        modelType,
+                        data,
+                        submitToChain
+                    })
+                });
+
+                const result = await response.json();
+                loadingDiv.classList.remove('show');
+
+                if (result.success) {
+                    const pred = result.prediction;
+                    let displayValue = '';
+                    
+                    if (pred.prediction !== undefined) {
+                        displayValue = `<strong>Prediksi:</strong> ${pred.prediction.toFixed(2)}`;
+                    } else if (pred.risk_score !== undefined) {
+                        displayValue = `<strong>Risk Score:</strong> ${pred.risk_score} (${pred.risk_level})`;
+                    } else if (pred.fraud_score !== undefined) {
+                        displayValue = `<strong>Fraud Score:</strong> ${pred.fraud_score} (${pred.is_fraud ? 'FRAUD DETECTED' : 'SAFE'})`;
+                    }
+
+                    resultDiv.innerHTML = `
+                        <div class="status success">
+                            ✅ Prediksi berhasil!<br>
+                            ${displayValue}<br>
+                            <strong>Confidence:</strong> ${pred.confidence}%<br>
+                            <strong>Model:</strong> ${pred.model}<br>
+                            ${result.blockchain ? '<br>📤 Submitted to blockchain!' : ''}
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div class="status error">❌ Error: ${result.error}</div>`;
+                }
+                resultDiv.classList.add('show');
+
+            } catch (error) {
+                loadingDiv.classList.remove('show');
+                resultDiv.innerHTML = `<div class="status error">❌ Error: ${error.message}</div>`;
+                resultDiv.classList.add('show');
+            }
+        }
+    </script>
+</body>
+</html>

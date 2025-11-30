@@ -1,0 +1,43 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "api/*.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "frontend/index-vercel.html",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/api/oracle/health",
+      "dest": "/api/oracle.js"
+    },
+    {
+      "src": "/api/oracle/request-prediction",
+      "dest": "/api/oracle.js"
+    },
+    {
+      "src": "/api/ai/health",
+      "dest": "/api/ai-predict.js"
+    },
+    {
+      "src": "/api/ai/predict",
+      "dest": "/api/ai-predict.js"
+    },
+    {
+      "src": "/api/ai/models",
+      "dest": "/api/ai-predict.js"
+    },
+    {
+      "src": "/",
+      "dest": "/frontend/index-vercel.html"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/frontend/$1"
+    }
+  ]
+}
