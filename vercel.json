@@ -6,7 +6,7 @@
       "use": "@vercel/node"
     },
     {
-      "src": "frontend/index-vercel.html",
+      "src": "frontend/**",
       "use": "@vercel/static"
     }
   ],
@@ -32,12 +32,21 @@
       "dest": "/api/ai-predict.js"
     },
     {
+      "src": "/demo",
+      "dest": "/frontend/linera-web-demo.html"
+    },
+    {
       "src": "/",
-      "dest": "/frontend/index-vercel.html"
+      "dest": "/frontend/linera-web-demo.html"
     },
     {
       "src": "/(.*)",
       "dest": "/frontend/$1"
     }
-  ]
+  ],
+  "env": {
+    "LINERA_RPC_URL": "https://rpc.testnet-conway.linera.net",
+    "LINERA_NETWORK": "testnet-conway",
+    "NODE_ENV": "production"
+  }
 }

@@ -1,0 +1,30 @@
+{
+  "name": "smart-contract-2.0-frontend",
+  "version": "1.2.0",
+  "description": "Frontend for Smart Contract 2.0 on Linera Testnet Conway",
+  "main": "index.html",
+  "scripts": {
+    "dev": "python3 -m http.server 8080",
+    "build": "echo 'Static site - no build needed'",
+    "deploy": "vercel --prod"
+  },
+  "keywords": [
+    "linera",
+    "blockchain",
+    "smart-contracts",
+    "ai",
+    "machine-learning",
+    "testnet"
+  ],
+  "author": "Smart Contract 2.0 Team",
+  "license": "MIT",
+  "dependencies": {
+    "@linera/sdk": "^0.1.0"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/IdcuqS07/smart-contract-2.0.git"
+  },
+  "homepage": "https://github.com/IdcuqS07/smart-contract-2.0#readme"
+}
