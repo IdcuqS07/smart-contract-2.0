@@ -75,7 +75,7 @@ Combining three powerful technologies:
   - Events: Contract lifecycle tracking
 
 - **Status:** Code complete and ready for deployment
-- **Pending:** Linera CLI availability for testnet deployment
+- **Ready to Deploy:** Install Linera CLI from source (https://github.com/linera-io/linera-protocol) - 30 min deployment
 
 ---
 
