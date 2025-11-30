@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -85,6 +85,8 @@
             display: none;
         }
         .result.show { display: block; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
@@ -126,48 +128,48 @@
 
         <!-- Create Contract -->
         <div class="card">
-            <h2>📝 Buat Kontrak Adaptif</h2>
+            <h2>📝 Create Adaptive Contract</h2>
             <p style="margin-bottom: 15px; color: #666;">
-                Buat smart contract yang dapat beradaptasi berdasarkan prediksi AI
+                Create smart contracts that adapt based on AI predictions
             </p>
-            <input type="text" id="contractType" placeholder="Tipe Kontrak (e.g., insurance, loan)">
+            <input type="text" id="contractType" placeholder="Contract Type (e.g., insurance, loan)">
             <input type="number" id="threshold" placeholder="Threshold Value">
-            <button onclick="createContract()">Buat Kontrak</button>
+            <button onclick="createContract()">Create Contract</button>
             <div id="createResult" class="result"></div>
         </div>
 
         <!-- AI Models -->
         <div class="card">
-            <h2>🤖 Model AI Tersedia</h2>
+            <h2>🤖 Available AI Models</h2>
             <div class="grid">
                 <div class="model-card" onclick="selectModel('price')">
                     <h3>📈 Price Prediction</h3>
-                    <p>Prediksi harga cryptocurrency menggunakan LSTM</p>
+                    <p>Predict cryptocurrency prices using LSTM</p>
                 </div>
                 <div class="model-card" onclick="selectModel('risk')">
                     <h3>⚠️ Risk Analysis</h3>
-                    <p>Analisis risiko menggunakan Random Forest</p>
+                    <p>Analyze risks using Random Forest</p>
                 </div>
                 <div class="model-card" onclick="selectModel('fraud')">
                     <h3>🔒 Fraud Detection</h3>
-                    <p>Deteksi fraud menggunakan XGBoost</p>
+                    <p>Detect fraud using XGBoost</p>
                 </div>
             </div>
         </div>
 
         <!-- Prediction Form -->
         <div class="card" id="predictionForm" style="display:none;">
-            <h2>🎯 Submit Prediksi AI</h2>
+            <h2>🎯 Submit AI Prediction</h2>
             <input type="number" id="contractId" placeholder="Contract ID">
             <select id="predictionType">
-                <option value="">Pilih Tipe Prediksi</option>
+                <option value="">Select Prediction Type</option>
                 <option value="price">Price Prediction</option>
                 <option value="risk">Risk Analysis</option>
                 <option value="fraud">Fraud Detection</option>
             </select>
             <input type="number" id="predictionValue" placeholder="Prediction Value">
             <input type="number" id="confidence" placeholder="Confidence (0-100)" min="0" max="100">
-            <button onclick="submitPrediction()">Submit Prediksi</button>
+            <button onclick="submitPrediction()">Submit Prediction</button>
             <div id="predictionResult" class="result"></div>
         </div>
 
@@ -186,8 +188,9 @@
         <!-- Documentation -->
         <div class="card">
             <h2>📚 Documentation</h2>
-            <p>Untuk informasi lengkap tentang deployment dan penggunaan:</p>
+            <p>For complete information about deployment and usage:</p>
             <ul style="margin: 15px 0; padding-left: 20px;">
+                <li><a href="https://github.com/IdcuqS07/smart-contract-2.0" target="_blank">GitHub Repository</a></li>
                 <li>DEPLOYMENT_SUCCESS.md - Deployment confirmation</li>
                 <li>FINAL_DEPLOYMENT_SUMMARY.md - Complete summary</li>
                 <li>ALL_DEPLOYMENTS_STATUS.md - All deployments overview</li>
@@ -203,22 +206,22 @@
             selectedModel = model;
             document.getElementById('predictionForm').style.display = 'block';
             document.getElementById('predictionType').value = model;
-            showResult('predictionResult', `Model ${model} dipilih. Silakan isi form di bawah.`, 'success');
+            showResult('predictionResult', `Model ${model} selected. Please fill the form below.`, 'success');
         }
 
         function createContract() {
             const type = document.getElementById('contractType').value;
-            const threshold = document.getElementById('contractId').value;
+            const threshold = document.getElementById('threshold').value;
             
             if (!type || !threshold) {
-                showResult('createResult', 'Mohon isi semua field!', 'error');
+                showResult('createResult', 'Please fill all fields!', 'error');
                 return;
             }
 
             // Simulate contract creation
             const contractId = Math.floor(Math.random() * 1000);
             showResult('createResult', 
-                `✅ Kontrak berhasil dibuat!<br>
+                `✅ Contract created successfully!<br>
                 Contract ID: ${contractId}<br>
                 Type: ${type}<br>
                 Threshold: ${threshold}<br>
@@ -234,13 +237,13 @@
             const confidence = document.getElementById('confidence').value;
 
             if (!contractId || !type || !value || !confidence) {
-                showResult('predictionResult', 'Mohon isi semua field!', 'error');
+                showResult('predictionResult', 'Please fill all fields!', 'error');
                 return;
             }
 
             // Simulate AI prediction
             showResult('predictionResult',
-                `✅ Prediksi AI berhasil disubmit!<br>
+                `✅ AI Prediction submitted successfully!<br>
                 Contract ID: ${contractId}<br>
                 Type: ${type}<br>
                 Predicted Value: ${value}<br>
