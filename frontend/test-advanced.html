@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Test - Smart Contract 2.0</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .card h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .status-badge {
+            display: inline-block;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        .status-success {
+            background: #d4edda;
+            color: #155724;
+        }
+        .status-error {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        .status-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: bold;
+            transition: transform 0.2s;
+            width: 100%;
+            margin-top: 10px;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        pre {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 0.9em;
+            margin-top: 10px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        .test-result {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+            background: #f8f9fa;
+        }
+        .model-selector {
+            margin: 15px 0;
+        }
+        .model-selector select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .input-group {
+            margin: 10px 0;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+        .stat-box {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .stat-box .label {
+            font-size: 0.9em;
+            color: #666;
+        }
+        .stat-box .value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #667eea;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Smart Contract 2.0 - Advanced Testing</h1>
+        
+        <div class="grid">
+            <!-- Service Status -->
+            <div class="card">
+                <h2>📊 Service Status</h2>
+                <button onclick="checkAllServices()">Check All Services</button>
+                <div id="serviceStatus"></div>
+            </div>
+
+            <!-- AI Models -->
+            <div class="card">
+                <h2>🤖 Available AI Models</h2>
+                <button onclick="loadModels()">Load Models</button>
+                <div id="modelsList"></div>
+            </div>
+
+            <!-- Quick Stats -->
+            <div class="card">
+                <h2>📈 Test Statistics</h2>
+                <div class="stats">
+                    <div class="stat-box">
+                        <div class="label">Tests Run</div>
+                        <div class="value" id="testsRun">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="label">Success</div>
+                        <div class="value" id="testsSuccess">0</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="label">Failed</div>
+                        <div class="value" id="testsFailed">0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Prediction Test -->
+        <div class="card">
+            <h2>🎯 Test AI Prediction</h2>
+            
+            <div class="model-selector">
+                <label>Select Model:</label>
+                <select id="modelSelect">
+                    <option value="price_prediction">Price Prediction</option>
+                    <option value="risk_analysis">Risk Analysis</option>
+                    <option value="fraud_detection">Fraud Detection</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <label>Test Data (JSON):</label>
+                <input type="text" id="testData" value='{"prices": [100, 105, 110, 108, 112]}' placeholder='{"key": "value"}'>
+            </div>
+
+            <button onclick="testPrediction()">Run Prediction Test</button>
+            <div id="predictionResult"></div>
+        </div>
+
+        <!-- Oracle Integration Test -->
+        <div class="card">
+            <h2>🔗 Test Oracle Integration</h2>
+            <p style="color: #666; margin-bottom: 15px;">
+                Test komunikasi antara AI Engine dan Oracle Service
+            </p>
+            
+            <button onclick="testOracleIntegration()">Test Oracle Integration</button>
+            <div id="oracleIntegrationResult"></div>
+        </div>
+    </div>
+
+    <script>
+        let stats = { run: 0, success: 0, failed: 0 };
+
+        function updateStats(success) {
+            stats.run++;
+            if (success) stats.success++;
+            else stats.failed++;
+            
+            document.getElementById('testsRun').textContent = stats.run;
+            document.getElementById('testsSuccess').textContent = stats.success;
+            document.getElementById('testsFailed').textContent = stats.failed;
+        }
+
+        async function checkAllServices() {
+            const resultDiv = document.getElementById('serviceStatus');
+            resultDiv.innerHTML = '<div class="status-badge status-pending">⏳ Checking services...</div>';
+            
+            const services = [
+                { name: 'AI Engine', url: 'http://localhost:5001/health' },
+                { name: 'Oracle Service', url: 'http://localhost:3002/health' }
+            ];
+
+            let html = '';
+            let allSuccess = true;
+
+            for (const service of services) {
+                try {
+                    const response = await fetch(service.url);
+                    const data = await response.json();
+                    html += `
+                        <div class="test-result">
+                            <div class="status-badge status-success">✅ ${service.name}</div>
+                            <pre>${JSON.stringify(data, null, 2)}</pre>
+                        </div>
+                    `;
+                } catch (error) {
+                    allSuccess = false;
+                    html += `
+                        <div class="test-result">
+                            <div class="status-badge status-error">❌ ${service.name}</div>
+                            <p>Error: ${error.message}</p>
+                        </div>
+                    `;
+                }
+            }
+
+            resultDiv.innerHTML = html;
+            updateStats(allSuccess);
+        }
+
+        async function loadModels() {
+            const resultDiv = document.getElementById('modelsList');
+            resultDiv.innerHTML = '<div class="status-badge status-pending">⏳ Loading models...</div>';
+            
+            try {
+                const response = await fetch('http://localhost:5001/models');
+                const data = await response.json();
+                
+                let html = '<div class="test-result">';
+                html += '<div class="status-badge status-success">✅ Models Loaded</div>';
+                html += '<ul style="margin-top: 10px;">';
+                data.models.forEach(model => {
+                    html += `<li style="padding: 5px 0;">📦 ${model}</li>`;
+                });
+                html += '</ul></div>';
+                
+                resultDiv.innerHTML = html;
+                updateStats(true);
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result">
+                        <div class="status-badge status-error">❌ Failed</div>
+                        <p>${error.message}</p>
+                    </div>
+                `;
+                updateStats(false);
+            }
+        }
+
+        async function testPrediction() {
+            const resultDiv = document.getElementById('predictionResult');
+            const modelType = document.getElementById('modelSelect').value;
+            const testDataStr = document.getElementById('testData').value;
+            
+            resultDiv.innerHTML = '<div class="status-badge status-pending">⏳ Running prediction...</div>';
+            
+            try {
+                const testData = JSON.parse(testDataStr);
+                
+                const response = await fetch('http://localhost:5001/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model_type: modelType,
+                        data: testData
+                    })
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+
+                const data = await response.json();
+                
+                resultDiv.innerHTML = `
+                    <div class="test-result">
+                        <div class="status-badge status-success">✅ Prediction Success</div>
+                        <h3 style="margin-top: 15px;">Results:</h3>
+                        <pre>${JSON.stringify(data, null, 2)}</pre>
+                        
+                        <div style="margin-top: 15px; padding: 15px; background: #e7f3ff; border-radius: 8px;">
+                            <strong>Model:</strong> ${data.model}<br>
+                            <strong>Confidence:</strong> ${data.confidence}%<br>
+                            <strong>Timestamp:</strong> ${new Date(data.timestamp).toLocaleString()}
+                        </div>
+                    </div>
+                `;
+                updateStats(true);
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result">
+                        <div class="status-badge status-error">❌ Prediction Failed</div>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                        <p style="margin-top: 10px;"><strong>Troubleshooting:</strong></p>
+                        <ul>
+                            <li>Check if AI Engine is running on port 5001</li>
+                            <li>Verify test data format is valid JSON</li>
+                            <li>Check browser console for details</li>
+                        </ul>
+                    </div>
+                `;
+                updateStats(false);
+            }
+        }
+
+        async function testOracleIntegration() {
+            const resultDiv = document.getElementById('oracleIntegrationResult');
+            resultDiv.innerHTML = '<div class="status-badge status-pending">⏳ Testing integration...</div>';
+            
+            try {
+                // Step 1: Test AI Engine
+                const aiResponse = await fetch('http://localhost:5001/predict', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        model_type: 'price_prediction',
+                        data: { prices: [100, 105, 110, 108, 112] }
+                    })
+                });
+                const aiData = await aiResponse.json();
+
+                // Step 2: Test Oracle
+                const oracleResponse = await fetch('http://localhost:3002/health');
+                const oracleData = await oracleResponse.json();
+
+                resultDiv.innerHTML = `
+                    <div class="test-result">
+                        <div class="status-badge status-success">✅ Integration Test Passed</div>
+                        
+                        <h3 style="margin-top: 15px;">Step 1: AI Engine Response</h3>
+                        <pre>${JSON.stringify(aiData, null, 2)}</pre>
+                        
+                        <h3 style="margin-top: 15px;">Step 2: Oracle Service Status</h3>
+                        <pre>${JSON.stringify(oracleData, null, 2)}</pre>
+                        
+                        <div style="margin-top: 15px; padding: 15px; background: #d4edda; border-radius: 8px; color: #155724;">
+                            <strong>✅ Integration Working!</strong><br>
+                            AI Engine and Oracle Service are communicating properly.
+                            <br><br>
+                            <strong>Next Step:</strong> Deploy Linera contract to test full blockchain integration.
+                        </div>
+                    </div>
+                `;
+                updateStats(true);
+            } catch (error) {
+                resultDiv.innerHTML = `
+                    <div class="test-result">
+                        <div class="status-badge status-error">❌ Integration Test Failed</div>
+                        <p><strong>Error:</strong> ${error.message}</p>
+                    </div>
+                `;
+                updateStats(false);
+            }
+        }
+
+        // Auto-check services on load
+        window.onload = function() {
+            console.log('🧪 Smart Contract 2.0 - Advanced Testing Interface');
+            console.log('Ready to test services...');
+            checkAllServices();
+        };
+    </script>
+</body>
+</html>

@@ -1,0 +1,5 @@
+::1 - - [30/Nov/2025 16:56:30] "GET /test.html HTTP/1.1" 304 -
+::1 - - [30/Nov/2025 16:59:18] "GET /test.html HTTP/1.1" 200 -
+::1 - - [30/Nov/2025 16:59:18] "GET /index.html HTTP/1.1" 200 -
+::1 - - [30/Nov/2025 16:59:36] "GET /test.html HTTP/1.1" 200 -
+::1 - - [30/Nov/2025 16:59:36] "GET /index.html HTTP/1.1" 200 -

@@ -141,17 +141,8 @@
                 });
                 const aiData = await aiResponse.json();
                 
-                // Test Oracle
-                const oracleResponse = await fetch('http://localhost:3002/request-prediction', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        contractId: 1,
-                        modelType: 'price_prediction',
-                        data: { prices: [100, 105, 110, 108, 112] },
-                        submitToChain: false
-                    })
-                });
+                // Test Oracle health (since we need Linera for full prediction)
+                const oracleResponse = await fetch('http://localhost:3002/health');
                 const oracleData = await oracleResponse.json();
                 
                 resultDiv.innerHTML = `

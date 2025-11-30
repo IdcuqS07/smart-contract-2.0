@@ -1,0 +1,15 @@
+🚀 Linera Oracle Service Started
+================================
+📡 Server running on: http://localhost:3002
+🔗 Linera GraphQL: http://localhost:8080/graphql
+🤖 AI Engine: http://localhost:5001
+================================
+
+📊 Available Endpoints:
+  GET  /health - Health check
+  POST /contract/create - Create adaptive contract
+  POST /prediction/request - Request AI prediction
+  GET  /contract/:id - Get contract info
+  GET  /prediction/latest/:contractId - Get latest prediction
+  POST /oracle/authorize - Authorize oracle address
+
