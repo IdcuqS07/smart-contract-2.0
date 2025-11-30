@@ -12,7 +12,7 @@ const API_CONFIG = {
   
   // API Endpoints
   ENDPOINTS: {
-    // AI Engine
+    // AI Engine (port 5001)
     AI_PREDICT: 'http://143.198.205.88/api/ai/predict',
     AI_HEALTH: 'http://143.198.205.88/api/ai/health',
     AI_MODELS: 'http://143.198.205.88/api/ai/models',
