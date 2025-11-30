@@ -4,7 +4,7 @@ mod state;
 
 use async_graphql::{EmptySubscription, Object, Request, Response, Schema};
 use linera_sdk::{
-    base::WithServiceAbi,
+    abi::WithServiceAbi,
     Service, ServiceRuntime,
 };
 use smart_contract_2_linera::{AdaptiveContract, AIPrediction, SmartContract2Abi};

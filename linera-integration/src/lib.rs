@@ -1,5 +1,5 @@
 use async_graphql::{Request, Response, SimpleObject};
-use linera_sdk::base::{ContractAbi, ServiceAbi};
+use linera_sdk::abi::{ContractAbi, ServiceAbi};
 use serde::{Deserialize, Serialize};
 
 pub struct SmartContract2Abi;
