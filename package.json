@@ -1,27 +1,21 @@
 {
-  "name": "smart-contract-2.0",
+  "name": "smart-contract-2.0-linera",
   "version": "1.0.0",
-  "description": "AI-Enhanced Smart Contracts",
+  "description": "AI-Enhanced Smart Contracts on Linera Blockchain",
   "type": "module",
   "scripts": {
-    "compile": "hardhat compile",
-    "test": "hardhat test",
-    "deploy": "hardhat run scripts/deploy.js",
-    "deploy:sepolia": "hardhat run scripts/deploy-sepolia.js --network sepolia",
-    "deploy:mumbai": "hardhat run scripts/deploy-sepolia.js --network mumbai",
-    "node": "hardhat node",
+    "build:linera": "cd linera-integration && cargo build --release --target wasm32-unknown-unknown",
+    "deploy:linera": "cd linera-integration && ./scripts/deploy.sh",
+    "test:oracle": "cd linera-integration/oracle-client && node test.js",
     "vercel-build": "echo 'Build complete'",
     "vercel-deploy": "vercel --prod"
   },
   "dependencies": {
-    "@openzeppelin/contracts": "^5.0.0",
-    "ethers": "^6.9.0",
     "express": "^4.18.2",
     "axios": "^1.6.0",
-    "dotenv": "^16.3.1"
+    "dotenv": "^16.3.1",
+    "graphql": "^16.8.1",
+    "graphql-request": "^6.1.0"
   },
-  "devDependencies": {
-    "@nomicfoundation/hardhat-toolbox": "^4.0.0",
-    "hardhat": "^2.19.0"
-  }
+  "devDependencies": {}
 }

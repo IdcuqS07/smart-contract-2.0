@@ -1,52 +1,49 @@
-# Smart Contract 2.0 - AI-Enhanced Blockchain Contracts
+# Smart Contract 2.0 - AI-Enhanced Smart Contracts on Linera
 
-Implementasi Smart Contract 2.0 yang mengintegrasikan AI dengan blockchain untuk kontrak yang adaptif dan kontekstual, berdasarkan paper "Smart Contract 2.0 — Arsitektur & Desain Teknis untuk Kontrak Benar-Benar Cerdas" oleh Idcuq Sant.
+Implementasi Smart Contract 2.0 yang mengintegrasikan AI dengan Linera blockchain untuk kontrak yang adaptif, cerdas, dan ultra-cepat, berdasarkan paper "Smart Contract 2.0 — Arsitektur & Desain Teknis untuk Kontrak Benar-Benar Cerdas" oleh Idcuq Sant.
 
 ## 🎯 Fitur Utama
 
-- ✅ **3 Model AI**: Price Prediction, Risk Analysis, Fraud Detection
-- ✅ **Hybrid Architecture**: On-chain contracts + Off-chain AI
-- ✅ **Oracle Integration**: Bridge antara AI dan blockchain
-- ✅ **Adaptive Contracts**: Auto-execution berdasarkan AI predictions
-- ✅ **Web Interface**: User-friendly dashboard
+- ⚡ **Ultra-Low Latency**: Sub-second finality dengan Linera (<1s)
+- 🤖 **3 Model AI**: Price Prediction, Risk Analysis, Fraud Detection
+- 🚀 **High Scalability**: 1000+ TPS dengan microchains
+- 💰 **Cost Efficient**: 96% lebih murah dari blockchain tradisional
+- 🔄 **Real-Time Events**: GraphQL queries & WebSocket subscriptions
+- 📚 **Complete Documentation**: Tutorial lengkap dan examples
 
 ## 🚀 Quick Start
 
-### 🌐 Deploy ke Vercel (Recommended - 2 menit)
+### 💻 Local Development with Linera
+
+```bash
+# 1. Install Rust & Linera
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+rustup target add wasm32-unknown-unknown
+cargo install linera-service --git https://github.com/linera-io/linera-protocol.git
+
+# 2. Build & Deploy
+cd linera-integration
+./scripts/deploy.sh
+
+# 3. Start services (3 terminals)
+linera service --port 8080             # Terminal 1: Linera node
+./venv/bin/python ai-engine/main.py   # Terminal 2: AI Engine
+cd oracle-client && node test.js       # Terminal 3: Test
+
+# 4. Open browser
+open http://localhost:8080/graphql
+```
+
+📖 **Panduan:** [LINERA_INTEGRATION.md](LINERA_INTEGRATION.md)
+
+### 🌐 Deploy ke Vercel (Frontend & API)
 
 ```bash
 npm i -g vercel
 vercel --prod
 ```
 
-✅ Gratis, cepat, dan langsung live di internet!
-
-📖 **Panduan:** [README_VERCEL.md](README_VERCEL.md) | [DEPLOY_CHECKLIST.md](DEPLOY_CHECKLIST.md)
-
-### 💻 Local Development
-
-```bash
-# 1. Install & compile
-npm install && npm run compile
-
-# 2. Start services (4 terminals)
-npm run node                           # Terminal 1: Blockchain
-npm run deploy                         # Terminal 2: Deploy contracts
-./venv/bin/python ai-engine/main.py   # Terminal 3: AI Engine
-node oracle-service/server.js          # Terminal 4: Oracle
-
-# 3. Open browser
-open http://localhost:8080
-```
-
-📖 **Panduan:** [QUICK_START.md](QUICK_START.md)
-
-### 📋 Pilihan Deployment Lainnya
-
-Lihat [DEPLOYMENT_OPTIONS.md](DEPLOYMENT_OPTIONS.md) untuk:
-- Deploy ke VPS/Cloud
-- Production setup
-- Perbandingan biaya & fitur
+� **Panduan:** [VERCEL_READY.md](VERCEL_READY.md)
 
 ## 📁 Struktur Proyek
 
@@ -81,12 +78,14 @@ User → Frontend → Oracle Service → AI Engine
 ## 🛠️ Teknologi
 
 ### Blockchain
-- **Ethereum**: Solidity, Hardhat, Ethers.js
-- **Linera**: Rust, GraphQL, WebAssembly ⚡ NEW!
+- **Linera**: Rust, GraphQL, WebAssembly ⚡
+- **Smart Contracts**: Rust dengan Linera SDK
+- **Microchains**: Isolated execution per contract
 
 ### AI & Backend
 - **AI Engine**: Python, Flask, NumPy
-- **Oracle**: Node.js, Express, GraphQL
+- **Oracle**: Node.js, GraphQL Client
+- **Real-Time**: WebSocket subscriptions
 
 ### Frontend & Deployment
 - **Frontend**: HTML, CSS, JavaScript
