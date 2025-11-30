@@ -4,7 +4,7 @@ Implementasi Smart Contract 2.0 yang mengintegrasikan AI dengan Linera blockchai
 
 ## 🌐 Live Demo
 
-**Demo URL:** https://smart-contract-2-0.vercel.app/demo (Coming soon)
+**Demo URL:** https://smartcontract2-linera-k55m8vkgz-0xcryptotechs-projects.vercel.app
 
 **Current Status:**
 - ✅ **AI Engine:** Fully functional with 3 ML models
