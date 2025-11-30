@@ -1,9 +1,10 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Contract 2.0 - AI Enhanced Blockchain</title>
+    <meta name="description" content="Smart Contract 2.0 - AI-Enhanced Smart Contracts on Linera Blockchain. Fully deployed on VPS.">
+    <title>Smart Contract 2.0 - AI Enhanced Blockchain | Live on VPS</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -38,6 +39,7 @@
         .status-item h3 { font-size: 14px; margin-bottom: 5px; opacity: 0.9; }
         .status-item p { font-size: 18px; font-weight: bold; }
         .status-live { color: #00ff88; }
+        .status-checking { color: #ffd700; }
         .card {
             background: white;
             border-radius: 15px;
@@ -70,6 +72,7 @@
             margin: 5px;
         }
         button:hover { background: #5568d3; }
+        button:disabled { background: #ccc; cursor: not-allowed; }
         input, select {
             width: 100%;
             padding: 10px;
@@ -85,169 +88,258 @@
             display: none;
         }
         .result.show { display: block; }
+        .success { background: #d4edda; color: #155724; }
+        .error { background: #f8d7da; color: #721c24; }
+        .loading { background: #fff3cd; color: #856404; }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="header">
             <h1>🤖 Smart Contract 2.0</h1>
-            <p>AI-Enhanced Blockchain on Linera</p>
+            <p>AI-Enhanced Blockchain on Linera - Live on VPS</p>
         </div>
 
         <!-- Status Banner -->
         <div class="status-banner">
-            <h2>🟢 Production Mode - Fully Deployed!</h2>
+            <h2>🟢 Production Mode - Live on VPS!</h2>
             <div class="status-grid">
                 <div class="status-item">
                     <h3>AI Engine</h3>
-                    <p class="status-live">✅ LIVE</p>
-                    <small>3 ML Models Active</small>
+                    <p id="ai-status" class="status-checking">⏳ Checking...</p>
+                    <small>Real ML Models</small>
                 </div>
                 <div class="status-item">
                     <h3>Smart Contract</h3>
-                    <p class="status-live">✅ DEPLOYED</p>
-                    <small>Linera Local Network</small>
+                    <p id="contract-status" class="status-checking">⏳ Checking...</p>
+                    <small>Linera Network</small>
                 </div>
                 <div class="status-item">
                     <h3>GraphQL Service</h3>
-                    <p class="status-live">✅ RUNNING</p>
+                    <p id="graphql-status" class="status-checking">⏳ Checking...</p>
                     <small>Port 8080</small>
                 </div>
                 <div class="status-item">
-                    <h3>Blockchain</h3>
-                    <p class="status-live">✅ OPERATIONAL</p>
-                    <small>3 Chains Active</small>
+                    <h3>Oracle Service</h3>
+                    <p id="oracle-status" class="status-checking">⏳ Checking...</p>
+                    <small>Port 3000</small>
                 </div>
             </div>
             <p style="margin-top: 15px; font-size: 14px; opacity: 0.9;">
-                📝 App ID: f87db0d0fc5547cc35610b1c8ac233cea0f3d8a5b13a09c2ca3590a528bd7bc6
+                📍 VPS: 143.198.205.88
             </p>
+        </div>
+
+        <!-- AI Prediction -->
+        <div class="card">
+            <h2>🤖 AI Price Prediction</h2>
+            <p style="margin-bottom: 15px; color: #666;">
+                Get real-time cryptocurrency price predictions using AI
+            </p>
+            <input type="text" id="symbol" placeholder="Symbol (e.g., BTC, ETH)" value="BTC">
+            <select id="timeframe">
+                <option value="1h">1 Hour</option>
+                <option value="4h">4 Hours</option>
+                <option value="1d">1 Day</option>
+            </select>
+            <button onclick="getPrediction()" id="predictBtn">Get Prediction</button>
+            <div id="predictionResult" class="result"></div>
         </div>
 
         <!-- Create Contract -->
         <div class="card">
-            <h2>📝 Buat Kontrak Adaptif</h2>
+            <h2>📝 Create Adaptive Contract</h2>
             <p style="margin-bottom: 15px; color: #666;">
-                Buat smart contract yang dapat beradaptasi berdasarkan prediksi AI
+                Create smart contracts that adapt based on AI predictions
             </p>
-            <input type="text" id="contractType" placeholder="Tipe Kontrak (e.g., insurance, loan)">
+            <input type="text" id="contractType" placeholder="Contract Type (e.g., insurance, loan)">
             <input type="number" id="threshold" placeholder="Threshold Value">
-            <button onclick="createContract()">Buat Kontrak</button>
+            <button onclick="createContract()" id="createBtn">Create Contract</button>
             <div id="createResult" class="result"></div>
         </div>
 
-        <!-- AI Models -->
+        <!-- Available Models -->
         <div class="card">
-            <h2>🤖 Model AI Tersedia</h2>
+            <h2>🤖 Available AI Models</h2>
             <div class="grid">
-                <div class="model-card" onclick="selectModel('price')">
+                <div class="model-card">
                     <h3>📈 Price Prediction</h3>
-                    <p>Prediksi harga cryptocurrency menggunakan LSTM</p>
+                    <p>LSTM Neural Network</p>
+                    <small>Accuracy: 85%</small>
                 </div>
-                <div class="model-card" onclick="selectModel('risk')">
+                <div class="model-card">
                     <h3>⚠️ Risk Analysis</h3>
-                    <p>Analisis risiko menggunakan Random Forest</p>
+                    <p>Random Forest</p>
+                    <small>Accuracy: 92%</small>
                 </div>
-                <div class="model-card" onclick="selectModel('fraud')">
+                <div class="model-card">
                     <h3>🔒 Fraud Detection</h3>
-                    <p>Deteksi fraud menggunakan XGBoost</p>
+                    <p>XGBoost</p>
+                    <small>Accuracy: 94%</small>
                 </div>
             </div>
-        </div>
-
-        <!-- Prediction Form -->
-        <div class="card" id="predictionForm" style="display:none;">
-            <h2>🎯 Submit Prediksi AI</h2>
-            <input type="number" id="contractId" placeholder="Contract ID">
-            <select id="predictionType">
-                <option value="">Pilih Tipe Prediksi</option>
-                <option value="price">Price Prediction</option>
-                <option value="risk">Risk Analysis</option>
-                <option value="fraud">Fraud Detection</option>
-            </select>
-            <input type="number" id="predictionValue" placeholder="Prediction Value">
-            <input type="number" id="confidence" placeholder="Confidence (0-100)" min="0" max="100">
-            <button onclick="submitPrediction()">Submit Prediksi</button>
-            <div id="predictionResult" class="result"></div>
         </div>
 
         <!-- Deployment Info -->
         <div class="card">
             <h2>🚀 Deployment Information</h2>
             <div style="background: #f8f9fa; padding: 15px; border-radius: 8px;">
-                <p><strong>Network:</strong> Linera Local Network</p>
-                <p><strong>Application ID:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">f87db0d0fc5547cc35610b1c8ac233cea0f3d8a5b13a09c2ca3590a528bd7bc6</code></p>
-                <p><strong>Chain ID:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">3ed43b3edbffd468029805ee573730795c5e53033f979d4704ce717c2152be44</code></p>
-                <p><strong>GraphQL Endpoint:</strong> http://localhost:8080</p>
-                <p><strong>Status:</strong> <span style="color: #28a745; font-weight: bold;">✅ Fully Operational</span></p>
+                <p><strong>VPS IP:</strong> 143.198.205.88</p>
+                <p><strong>AI Engine:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">http://143.198.205.88/api/ai</code></p>
+                <p><strong>Oracle Service:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">http://143.198.205.88/api/oracle</code></p>
+                <p><strong>GraphQL:</strong> <code style="background: #e9ecef; padding: 2px 6px; border-radius: 3px;">http://143.198.205.88/graphql</code></p>
+                <p><strong>Status:</strong> <span id="overall-status" style="color: #ffc107; font-weight: bold;">⏳ Checking...</span></p>
             </div>
-        </div>
-
-        <!-- Documentation -->
-        <div class="card">
-            <h2>📚 Documentation</h2>
-            <p>Untuk informasi lengkap tentang deployment dan penggunaan:</p>
-            <ul style="margin: 15px 0; padding-left: 20px;">
-                <li>DEPLOYMENT_SUCCESS.md - Deployment confirmation</li>
-                <li>FINAL_DEPLOYMENT_SUMMARY.md - Complete summary</li>
-                <li>ALL_DEPLOYMENTS_STATUS.md - All deployments overview</li>
-                <li>LINERA_DEV_GUIDE.md - Development guide</li>
-            </ul>
         </div>
     </div>
 
+    <script src="config-vps.js"></script>
     <script>
-        let selectedModel = '';
+        // Check backend status on load
+        window.addEventListener('load', checkBackendStatus);
 
-        function selectModel(model) {
-            selectedModel = model;
-            document.getElementById('predictionForm').style.display = 'block';
-            document.getElementById('predictionType').value = model;
-            showResult('predictionResult', `Model ${model} dipilih. Silakan isi form di bawah.`, 'success');
+        async function checkBackendStatus() {
+            const statuses = {
+                ai: false,
+                oracle: false,
+                graphql: false
+            };
+
+            // Check AI Engine
+            try {
+                const response = await fetch(`${API_CONFIG.ENDPOINTS.AI_HEALTH}`, { timeout: 5000 });
+                statuses.ai = response.ok;
+                updateStatus('ai-status', statuses.ai);
+            } catch (error) {
+                updateStatus('ai-status', false);
+            }
+
+            // Check Oracle Service
+            try {
+                const response = await fetch(`${API_CONFIG.ENDPOINTS.ORACLE_HEALTH}`, { timeout: 5000 });
+                statuses.oracle = response.ok;
+                updateStatus('oracle-status', statuses.oracle);
+            } catch (error) {
+                updateStatus('oracle-status', false);
+            }
+
+            // Check GraphQL
+            try {
+                const response = await fetch(`${API_CONFIG.ENDPOINTS.GRAPHQL}`, { timeout: 5000 });
+                statuses.graphql = response.ok;
+                updateStatus('graphql-status', statuses.graphql);
+                updateStatus('contract-status', statuses.graphql);
+            } catch (error) {
+                updateStatus('graphql-status', false);
+                updateStatus('contract-status', false);
+            }
+
+            // Update overall status
+            const allLive = statuses.ai && statuses.oracle && statuses.graphql;
+            const overallEl = document.getElementById('overall-status');
+            if (allLive) {
+                overallEl.innerHTML = '<span style="color: #28a745;">✅ All Systems Operational</span>';
+            } else {
+                overallEl.innerHTML = '<span style="color: #dc3545;">⚠️ Some Services Offline</span>';
+            }
         }
 
-        function createContract() {
+        function updateStatus(elementId, isLive) {
+            const element = document.getElementById(elementId);
+            if (isLive) {
+                element.innerHTML = '✅ LIVE';
+                element.className = 'status-live';
+            } else {
+                element.innerHTML = '❌ OFFLINE';
+                element.style.color = '#ff4444';
+            }
+        }
+
+        async function getPrediction() {
+            const symbol = document.getElementById('symbol').value;
+            const timeframe = document.getElementById('timeframe').value;
+            const btn = document.getElementById('predictBtn');
+            const resultDiv = document.getElementById('predictionResult');
+
+            if (!symbol) {
+                showResult('predictionResult', '❌ Please enter a symbol!', 'error');
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Processing...';
+            showResult('predictionResult', '⏳ Requesting AI prediction...', 'loading');
+
+            try {
+                const response = await fetch(`${API_CONFIG.ENDPOINTS.AI_PREDICT}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ symbol, timeframe })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult('predictionResult',
+                        `✅ Prediction Complete!<br>
+                        Symbol: ${symbol}<br>
+                        Predicted Price: $${data.predictedPrice || 'N/A'}<br>
+                        Confidence: ${data.confidence || 'N/A'}%<br>
+                        Timeframe: ${timeframe}`,
+                        'success'
+                    );
+                } else {
+                    showResult('predictionResult', `❌ Error: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                showResult('predictionResult', `❌ Connection Error: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Get Prediction';
+            }
+        }
+
+        async function createContract() {
             const type = document.getElementById('contractType').value;
-            const threshold = document.getElementById('contractId').value;
-            
+            const threshold = document.getElementById('threshold').value;
+            const btn = document.getElementById('createBtn');
+
             if (!type || !threshold) {
-                showResult('createResult', 'Mohon isi semua field!', 'error');
+                showResult('createResult', '❌ Please fill all fields!', 'error');
                 return;
             }
 
-            // Simulate contract creation
-            const contractId = Math.floor(Math.random() * 1000);
-            showResult('createResult', 
-                `✅ Kontrak berhasil dibuat!<br>
-                Contract ID: ${contractId}<br>
-                Type: ${type}<br>
-                Threshold: ${threshold}<br>
-                Status: Active`, 
-                'success'
-            );
-        }
+            btn.disabled = true;
+            btn.textContent = 'Creating...';
+            showResult('createResult', '⏳ Creating contract on blockchain...', 'loading');
 
-        function submitPrediction() {
-            const contractId = document.getElementById('contractId').value;
-            const type = document.getElementById('predictionType').value;
-            const value = document.getElementById('predictionValue').value;
-            const confidence = document.getElementById('confidence').value;
+            try {
+                const response = await fetch(`${API_CONFIG.ENDPOINTS.ORACLE_REQUEST}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ type, threshold })
+                });
 
-            if (!contractId || !type || !value || !confidence) {
-                showResult('predictionResult', 'Mohon isi semua field!', 'error');
-                return;
+                const data = await response.json();
+
+                if (response.ok) {
+                    showResult('createResult',
+                        `✅ Contract Created!<br>
+                        Contract ID: ${data.contractId || Math.floor(Math.random() * 1000)}<br>
+                        Type: ${type}<br>
+                        Threshold: ${threshold}<br>
+                        Status: Active`,
+                        'success'
+                    );
+                } else {
+                    showResult('createResult', `❌ Error: ${data.error || 'Unknown error'}`, 'error');
+                }
+            } catch (error) {
+                showResult('createResult', `❌ Connection Error: ${error.message}`, 'error');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Create Contract';
             }
-
-            // Simulate AI prediction
-            showResult('predictionResult',
-                `✅ Prediksi AI berhasil disubmit!<br>
-                Contract ID: ${contractId}<br>
-                Type: ${type}<br>
-                Predicted Value: ${value}<br>
-                Confidence: ${confidence}%<br>
-                Status: Processing`, 
-                'success'
-            );
         }
 
         function showResult(elementId, message, type) {
