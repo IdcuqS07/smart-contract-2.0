@@ -3,8 +3,6 @@
 mod state;
 
 use linera_sdk::{
-    abi::WithContractAbi,
-    base::Owner,
     Contract, ContractRuntime,
 };
 use smart_contract_2_linera::{

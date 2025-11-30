@@ -3,3 +3,4 @@
 ::1 - - [30/Nov/2025 16:59:18] "GET /index.html HTTP/1.1" 200 -
 ::1 - - [30/Nov/2025 16:59:36] "GET /test.html HTTP/1.1" 200 -
 ::1 - - [30/Nov/2025 16:59:36] "GET /index.html HTTP/1.1" 200 -
+::1 - - [30/Nov/2025 17:15:29] "GET /linera-web-demo.html HTTP/1.1" 200 -

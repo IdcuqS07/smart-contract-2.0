@@ -1,9 +1,8 @@
-use linera_sdk::views::{linera_views, MapView, RegisterView, RootView, ViewStorageContext};
+use linera_sdk::views::{MapView, RegisterView, RootView};
 use crate::{AdaptiveContract, AIPrediction};
 
 /// Application state stored on the blockchain
-#[derive(RootView, async_graphql::SimpleObject)]
-#[view(context = "ViewStorageContext")]
+#[derive(RootView)]
 pub struct SmartContract2State {
     /// Counter for contract IDs
     pub contract_counter: RegisterView<u64>,

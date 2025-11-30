@@ -2,6 +2,29 @@
 
 Implementasi Smart Contract 2.0 yang mengintegrasikan AI dengan Linera blockchain untuk kontrak yang adaptif, cerdas, dan ultra-cepat, berdasarkan paper "Smart Contract 2.0 — Arsitektur & Desain Teknis untuk Kontrak Benar-Benar Cerdas" oleh Idcuq Sant.
 
+## 🌐 Live Demo
+
+**Demo URL:** https://smart-contract-2-0.vercel.app/demo (Coming soon)
+
+**Current Status:**
+- ✅ **AI Engine:** Fully functional with 3 ML models
+- ✅ **Oracle Service:** Ready for blockchain integration  
+- ✅ **Frontend:** Complete UI/UX with beautiful interface
+- ✅ **Smart Contract:** Complete Rust code ready for deployment
+- ⏳ **Blockchain:** Ready to deploy to Linera Testnet Conway
+
+**What's Working:**
+- Real AI predictions (Price Prediction, Risk Analysis, Fraud Detection)
+- Beautiful responsive user interface
+- Complete workflow demonstration
+- API endpoints functional
+- Local testing successful
+
+**What's Next:**
+- Deploy contract to Linera Testnet Conway (when CLI available)
+- Connect frontend to real blockchain
+- Full end-to-end integration on testnet
+
 ## 🎯 Fitur Utama
 
 - ⚡ **Ultra-Low Latency**: Sub-second finality dengan Linera (<1s)
