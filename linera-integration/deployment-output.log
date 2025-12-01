@@ -1,0 +1,19 @@
+2025-12-01T04:00:50.936816Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T04:00:50.989710Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T04:00:50.994501Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T04:00:50.998255Z  INFO linera: Creating application on chain 23db34dcbdbf832798b977b48248733e0505abab109466eee41da8fb2171dc3b
+warning: method `get_latest_prediction` is never used
+  --> src/state.rs:48:18
+   |
+14 | impl SmartContract2State {
+   | ------------------------ method in this implementation
+...
+48 |     pub async fn get_latest_prediction(&self, contract_id: u64) -> Option<AIPrediction> {
+   |                  ^^^^^^^^^^^^^^^^^^^^^
+   |
+   = note: `#[warn(dead_code)]` on by default
+
+warning: `smart-contract-2-linera` (lib) generated 1 warning
+    Finished `release` profile [optimized] target(s) in 0.79s
+2025-12-01T04:00:51.919935Z  INFO linera_client::client_context: Loading bytecode files
+2025-12-01T04:00:51.928496Z ERROR linera: Error is persistence error: I/O error: No such file or directory (os error 2)

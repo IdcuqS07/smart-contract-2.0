@@ -1,0 +1,18 @@
+2025-12-01T04:07:49.577507Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T04:07:49.726986Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T04:07:49.727563Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T04:07:49.728001Z  INFO linera: Creating application on chain 23db34dcbdbf832798b977b48248733e0505abab109466eee41da8fb2171dc3b
+    Finished `release` profile [optimized + debuginfo] target(s) in 0.73s
+2025-12-01T04:07:50.571059Z  INFO linera_client::client_context: Loading bytecode files
+2025-12-01T04:07:50.572002Z  INFO linera_client::client_context: Publishing module
+2025-12-01T04:07:51.669430Z  WARN handle_block_proposal{address="https://tn.linera.stakingcabin.com:443"}: grpc_client: error=Chain is expecting a next block at height 0 but the given block is at height 1 instead
+2025-12-01T04:07:52.245487Z  WARN handle_validated_certificate{address="https://tn.linera.stakingcabin.com:443"}: grpc_client: error=Chain is expecting a next block at height 0 but the given block is at height 1 instead
+2025-12-01T04:07:52.726208Z  INFO linera_client::client_context: Module published successfully!
+2025-12-01T04:07:52.726224Z  INFO linera_client::client_context: Synchronizing client and processing inbox
+2025-12-01T04:07:53.882942Z  INFO linera_core::client: find_received_certificates finished
+2025-12-01T04:07:54.535598Z  WARN handle_block_proposal{address="https://tn.linera.stakingcabin.com:443"}: grpc_client: error=Chain is expecting a next block at height 0 but the given block is at height 2 instead
+2025-12-01T04:07:55.059956Z  WARN handle_validated_certificate{address="https://tn.linera.stakingcabin.com:443"}: grpc_client: error=Chain is expecting a next block at height 0 but the given block is at height 2 instead
+2025-12-01T04:07:55.535137Z  INFO linera: Application published successfully!
+2025-12-01T04:07:55.535324Z  INFO linera: Project published and created in 5807 ms
+bb8c6e801d6433ed2c705861b622d943e89c759f65b1476985214ea4005a4160
+2025-12-01T04:07:55.535553Z  INFO linera: Project published and created in 5958 ms

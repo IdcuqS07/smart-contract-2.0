@@ -1,0 +1,8 @@
+2025-12-01T03:58:46.693872Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T03:58:46.743567Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T03:58:46.744084Z  INFO linera: Using default wallet directory /Users/idcuq/Library/Application Support/linera
+2025-12-01T03:58:46.744379Z  INFO linera: Creating application on chain 23db34dcbdbf832798b977b48248733e0505abab109466eee41da8fb2171dc3b
+2025-12-01T03:58:46.748894Z ERROR linera: Error is Not a directory (os error 20)
+
+Caused by:
+    Not a directory (os error 20)
