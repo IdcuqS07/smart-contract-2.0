@@ -1,56 +1,42 @@
 #!/bin/bash
 
-# Smart Contract 2.0 - Stop All Services Script
-# This script stops all running services
+# Stop All Services for Smart Contract 2.0
 
-set -e
+echo "🛑 Stopping All Services..."
 
-echo "🛑 Stopping Smart Contract 2.0 Services..."
-echo "=========================================="
-
-# Colors for output
-GREEN='\033[0;32m'
-RED='\033[0;31m'
-YELLOW='\033[1;33m'
-NC='\033[0m' # No Color
-
-# Get the project root directory
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-cd "$PROJECT_ROOT"
+LOGS_DIR="$PROJECT_ROOT/logs"
 
-# Check if PID file exists
-if [ ! -f "logs/pids.txt" ]; then
-    echo -e "${YELLOW}⚠️  No running services found${NC}"
-    exit 0
-fi
-
-# Read PIDs and kill processes
-echo -e "${YELLOW}Stopping services...${NC}"
-while IFS= read -r pid; do
-    if ps -p $pid > /dev/null 2>&1; then
-        echo "Killing process $pid..."
-        kill $pid 2>/dev/null || true
+# Function to stop service by PID file
+stop_service() {
+    local name=$1
+    local pid_file="$LOGS_DIR/$2.pid"
+    
+    if [ -f "$pid_file" ]; then
+        local pid=$(cat "$pid_file")
+        if ps -p $pid > /dev/null 2>&1; then
+            echo "Stopping $name (PID: $pid)..."
+            kill $pid
+            rm "$pid_file"
+            echo "✅ $name stopped"
+        else
+            echo "⚠️  $name not running"
+            rm "$pid_file"
+        fi
+    else
+        echo "⚠️  No PID file for $name"
     fi
-done < logs/pids.txt
+}
 
-# Also kill by port (backup method)
-echo ""
-echo -e "${YELLOW}Cleaning up ports...${NC}"
-lsof -ti:5001 | xargs kill -9 2>/dev/null || true
-lsof -ti:3002 | xargs kill -9 2>/dev/null || true
-lsof -ti:8080 | xargs kill -9 2>/dev/null || true
+# Stop services
+stop_service "AI Engine" "ai-engine"
+stop_service "Linera" "linera"
+stop_service "Oracle" "oracle"
 
-# Stop Linera network
-echo ""
-echo -e "${YELLOW}Stopping Linera network...${NC}"
-cd linera-integration
-linera net down 2>/dev/null || true
-cd ..
-
-# Remove PID file
-rm -f logs/pids.txt
+# Also kill by process name (backup)
+pkill -f "python main.py" 2>/dev/null || true
+pkill -f "linera service" 2>/dev/null || true
+pkill -f "node server.js" 2>/dev/null || true
 
 echo ""
-echo "=========================================="
-echo -e "${GREEN}✅ All services stopped${NC}"
-echo "=========================================="
+echo "✅ All services stopped"

@@ -5,24 +5,18 @@ edition = "2021"
 
 [dependencies]
 async-graphql = "7.0"
-async-trait = "0.1"
-bcs = "0.1"
-linera-base = { git = "https://github.com/linera-io/linera-protocol.git" }
-linera-sdk = { git = "https://github.com/linera-io/linera-protocol.git" }
-linera-views = { git = "https://github.com/linera-io/linera-protocol.git" }
+futures = "0.3"
+linera-sdk = { git = "https://github.com/linera-io/linera-protocol.git", tag = "v0.15.6" }
 serde = { version = "1.0", features = ["derive"] }
-thiserror = "1.0"
+serde_json = "1.0"
 
 [dev-dependencies]
-linera-sdk = { git = "https://github.com/linera-io/linera-protocol.git", features = ["test"] }
+linera-sdk = { git = "https://github.com/linera-io/linera-protocol.git", tag = "v0.15.6", features = ["test"] }
 
 [lib]
-crate-type = ["cdylib", "rlib"]
+crate-type = ["cdylib"]
 
-[[bin]]
-name = "smart-contract-2-linera"
-path = "src/contract.rs"
-
-[[bin]]
-name = "smart-contract-2-service"
-path = "src/service.rs"
+[profile.release]
+opt-level = "s"
+lto = true
+strip = true

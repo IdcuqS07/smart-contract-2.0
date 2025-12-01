@@ -2,17 +2,20 @@
 
 mod state;
 
+use std::sync::Arc;
+
 use async_graphql::{EmptySubscription, Object, Request, Response, Schema};
 use linera_sdk::{
-    abi::WithServiceAbi,
+    linera_base_types::WithServiceAbi,
+    views::View,
     Service, ServiceRuntime,
 };
-use smart_contract_2_linera::{AdaptiveContract, AIPrediction, SmartContract2Abi};
+use smart_contract_2_linera::{AdaptiveContract, AIPrediction, Operation, SmartContract2Abi};
 use state::SmartContract2State;
-use std::sync::Arc;
 
 pub struct SmartContract2Service {
     state: Arc<SmartContract2State>,
+    runtime: Arc<ServiceRuntime<Self>>,
 }
 
 linera_sdk::service!(SmartContract2Service);
@@ -31,6 +34,7 @@ impl Service for SmartContract2Service {
         
         SmartContract2Service {
             state: Arc::new(state),
+            runtime: Arc::new(runtime),
         }
     }
 
@@ -39,7 +43,9 @@ impl Service for SmartContract2Service {
             QueryRoot {
                 state: self.state.clone(),
             },
-            MutationRoot,
+            MutationRoot {
+                runtime: self.runtime.clone(),
+            },
             EmptySubscription,
         )
         .finish();
@@ -54,20 +60,13 @@ struct QueryRoot {
 
 #[Object]
 impl QueryRoot {
-    /// Get contract by ID
     async fn contract(&self, id: u64) -> Option<AdaptiveContract> {
-        self.state
-            .contracts
-            .get(&id)
-            .await
-            .ok()
-            .flatten()
+        self.state.contracts.get(&id).await.ok().flatten()
     }
     
-    /// Get all contracts
     async fn contracts(&self) -> Vec<AdaptiveContract> {
         let mut contracts = Vec::new();
-        let counter = self.state.contract_counter.get();
+        let counter = *self.state.contract_counter.get();
         
         for id in 1..=counter {
             if let Ok(Some(contract)) = self.state.contracts.get(&id).await {
@@ -78,12 +77,10 @@ impl QueryRoot {
         contracts
     }
     
-    /// Get latest prediction for a contract
     async fn latest_prediction(&self, contract_id: u64) -> Option<AIPrediction> {
         self.state.get_latest_prediction(contract_id).await
     }
     
-    /// Get all predictions for a contract
     async fn predictions(&self, contract_id: u64) -> Vec<AIPrediction> {
         self.state
             .predictions
@@ -94,7 +91,6 @@ impl QueryRoot {
             .unwrap_or_default()
     }
     
-    /// Get prediction count for a contract
     async fn prediction_count(&self, contract_id: u64) -> u64 {
         self.state
             .predictions
@@ -106,23 +102,54 @@ impl QueryRoot {
             .unwrap_or(0)
     }
     
-    /// Check if oracle is authorized
     async fn is_oracle_authorized(&self, oracle: String) -> bool {
         self.state.is_oracle_authorized(&oracle).await
     }
     
-    /// Get contract counter
     async fn contract_counter(&self) -> u64 {
-        self.state.contract_counter.get()
+        *self.state.contract_counter.get()
+    }
+    
+    async fn owner(&self) -> String {
+        self.state.owner.get().clone()
     }
 }
 
-struct MutationRoot;
+struct MutationRoot {
+    runtime: Arc<ServiceRuntime<SmartContract2Service>>,
+}
 
 #[Object]
 impl MutationRoot {
-    /// Placeholder for mutations (handled by contract operations)
-    async fn placeholder(&self) -> bool {
-        true
+    async fn create_contract(&self, contract_type: String, threshold: u64) -> [u8; 0] {
+        let operation = Operation::CreateAdaptiveContract {
+            contract_type,
+            threshold,
+        };
+        self.runtime.schedule_operation(&operation);
+        []
+    }
+    
+    async fn submit_prediction(
+        &self,
+        contract_id: u64,
+        prediction_type: String,
+        value: i64,
+        confidence: u8,
+    ) -> [u8; 0] {
+        let operation = Operation::SubmitAIPrediction {
+            contract_id,
+            prediction_type,
+            value,
+            confidence,
+        };
+        self.runtime.schedule_operation(&operation);
+        []
+    }
+    
+    async fn authorize_oracle(&self, oracle_address: String) -> [u8; 0] {
+        let operation = Operation::AuthorizeOracle { oracle_address };
+        self.runtime.schedule_operation(&operation);
+        []
     }
 }

@@ -1,0 +1,12 @@
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-rpc/tests/snapshots/format__format.yaml.snap
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-service-graphql-client/gql/service_requests.graphql
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-service-graphql-client/gql/service_schema.graphql
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/base-runtime-api.wit
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/contract-entrypoints.wit
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/contract-runtime-api.wit
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/contract.wit
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/service-entrypoints.wit
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/service-runtime-api.wit
+cargo:rerun-if-changed=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/wit/service.wit
+cargo:rustc-cfg=linera_version_building
+cargo:rustc-env=LINERA_VERSION_STATIC_PATH=/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/linera-version-7fdf864d0317801a/out/static.rs

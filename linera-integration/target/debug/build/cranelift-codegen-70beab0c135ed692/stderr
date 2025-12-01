@@ -1,0 +1,20 @@
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/settings.rs
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/types.rs
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/opcodes.rs
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/clif_opt.isle
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/clif_lower.isle
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/inst_builder.rs
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/settings-x86.rs
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/settings-arm64.rs
+Writing generated file: /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/settings-riscv64.rs
+Rebuilding /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_opt.rs
+Writing ISLE-generated Rust code to /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_opt.rs
+Rebuilding /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_x64.rs
+Writing ISLE-generated Rust code to /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_x64.rs
+Rebuilding /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_aarch64.rs
+Writing ISLE-generated Rust code to /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_aarch64.rs
+Rebuilding /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_s390x.rs
+Writing ISLE-generated Rust code to /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_s390x.rs
+Rebuilding /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_riscv64.rs
+Writing ISLE-generated Rust code to /Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/cranelift-codegen-70beab0c135ed692/out/isle_riscv64.rs
+fatal: not a git repository (or any of the parent directories): .git

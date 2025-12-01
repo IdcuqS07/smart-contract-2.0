@@ -1,0 +1,1 @@
+/Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/wasm32-unknown-unknown/release/smart_contract_2_linera.wasm: /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/src/lib.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/src/state.rs

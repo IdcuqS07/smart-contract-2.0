@@ -1,0 +1,17 @@
+/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/deps/linera_version-d778bc57afc2f49c.d: /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/lib.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/mod.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/type.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/mod.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/type.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/linera-version-7fdf864d0317801a/out/static.rs
+
+/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/deps/liblinera_version-d778bc57afc2f49c.rlib: /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/lib.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/mod.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/type.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/mod.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/type.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/linera-version-7fdf864d0317801a/out/static.rs
+
+/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/deps/liblinera_version-d778bc57afc2f49c.rmeta: /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/lib.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/mod.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/type.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/mod.rs /Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/type.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/linera-version-7fdf864d0317801a/out/static.rs
+
+/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/lib.rs:
+/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/mod.rs:
+/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/serde_pretty/type.rs:
+/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/mod.rs:
+/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version/src/version_info/type.rs:
+/Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/linera-version-7fdf864d0317801a/out/static.rs:
+
+# env-dep:CARGO_MANIFEST_DIR=/Users/idcuq/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-version
+# env-dep:CARGO_PKG_NAME=linera-version
+# env-dep:CARGO_PKG_REPOSITORY=https://github.com/linera-io/linera-protocol
+# env-dep:LINERA_VERSION_STATIC_PATH=/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/linera-version-7fdf864d0317801a/out/static.rs

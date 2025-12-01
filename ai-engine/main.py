@@ -12,6 +12,17 @@ import json
 app = Flask(__name__)
 CORS(app)  # Enable CORS for all routes
 
+# Configure logging
+import logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+logger = logging.getLogger(__name__)
+
+# Request counter for metrics
+request_count = {'total': 0, 'success': 0, 'error': 0}
+
 class AIEngine:
     """Engine utama untuk berbagai model AI"""
     
@@ -156,18 +167,31 @@ def health():
 @app.route('/predict', methods=['POST'])
 def predict():
     """Main prediction endpoint"""
+    request_count['total'] += 1
+    start_time = datetime.now()
+    
     try:
         data = request.json
         model_type = data.get('model_type')
         input_data = data.get('data', {})
         
         if not model_type:
+            request_count['error'] += 1
+            logger.warning(f"Missing model_type in request")
             return jsonify({'error': 'model_type required'}), 400
         
+        logger.info(f"Processing prediction request: model={model_type}")
         result = ai_engine.predict(model_type, input_data)
+        
+        duration = (datetime.now() - start_time).total_seconds()
+        logger.info(f"Prediction completed in {duration:.2f}s")
+        
+        request_count['success'] += 1
         return jsonify(result)
     
     except Exception as e:
+        request_count['error'] += 1
+        logger.error(f"Prediction error: {str(e)}")
         return jsonify({'error': str(e)}), 500
 
 
@@ -176,6 +200,25 @@ def list_models():
     """List available models"""
     return jsonify({
         'models': list(ai_engine.models.keys()),
+        'timestamp': datetime.now().isoformat()
+    })
+
+
+@app.route('/metrics', methods=['GET'])
+def metrics():
+    """Service metrics endpoint"""
+    import os
+    import sys
+    
+    return jsonify({
+        'service': 'ai-engine',
+        'status': 'healthy',
+        'python_version': sys.version.split()[0],
+        'requests': request_count,
+        'models': {
+            'available': list(ai_engine.models.keys()),
+            'count': len(ai_engine.models)
+        },
         'timestamp': datetime.now().isoformat()
     })
 

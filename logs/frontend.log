@@ -4,3 +4,17 @@
 ::1 - - [30/Nov/2025 16:59:36] "GET /test.html HTTP/1.1" 200 -
 ::1 - - [30/Nov/2025 16:59:36] "GET /index.html HTTP/1.1" 200 -
 ::1 - - [30/Nov/2025 17:15:29] "GET /linera-web-demo.html HTTP/1.1" 200 -
+::1 - - [30/Nov/2025 20:41:36] code 501, message Unsupported method ('POST')
+::1 - - [30/Nov/2025 20:41:36] "POST /graphql HTTP/1.1" 501 -
+::1 - - [30/Nov/2025 20:56:56] code 404, message File not found
+::1 - - [30/Nov/2025 20:56:56] "GET /health HTTP/1.1" 404 -
+::1 - - [30/Nov/2025 20:56:56] code 501, message Unsupported method ('POST')
+::1 - - [30/Nov/2025 20:56:56] "POST /api/contract/create HTTP/1.1" 501 -
+::1 - - [30/Nov/2025 20:57:21] code 404, message File not found
+::1 - - [30/Nov/2025 20:57:21] "GET /health HTTP/1.1" 404 -
+::1 - - [30/Nov/2025 20:57:21] code 501, message Unsupported method ('POST')
+::1 - - [30/Nov/2025 20:57:21] "POST /api/contract/create HTTP/1.1" 501 -
+::1 - - [30/Nov/2025 20:59:15] code 404, message File not found
+::1 - - [30/Nov/2025 20:59:15] "GET /health HTTP/1.1" 404 -
+::1 - - [30/Nov/2025 20:59:15] code 501, message Unsupported method ('POST')
+::1 - - [30/Nov/2025 20:59:15] "POST /api/contract/create HTTP/1.1" 501 -

@@ -1,0 +1,14 @@
+/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/deps/serde-871eae7eb626e675.d: /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/serde-cac928b957a937b0/out/private.rs
+
+/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/deps/libserde-871eae7eb626e675.rlib: /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/serde-cac928b957a937b0/out/private.rs
+
+/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/deps/libserde-871eae7eb626e675.rmeta: /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs /Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs /Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/serde-cac928b957a937b0/out/private.rs
+
+/Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/lib.rs:
+/Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/integer128.rs:
+/Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/mod.rs:
+/Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/de.rs:
+/Users/idcuq/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/serde-1.0.228/src/private/ser.rs:
+/Users/idcuq/Documents/Smart\ Contract\ 2.0/linera-integration/target/debug/build/serde-cac928b957a937b0/out/private.rs:
+
+# env-dep:OUT_DIR=/Users/idcuq/Documents/Smart Contract 2.0/linera-integration/target/debug/build/serde-cac928b957a937b0/out

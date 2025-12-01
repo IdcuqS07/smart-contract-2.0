@@ -1,0 +1,1 @@
+{"rustc":9783247635632824192,"features":"","declared_features":"","target":0,"profile":0,"path":0,"deps":[[6231831375869389728,"build_script_build",false,6294277456491790522]],"local":[{"RerunIfChanged":{"output":"debug/build/linera-storage-service-9ebd75ce98fc8ca5/output","paths":["proto/key_value_store.proto"]}}],"rustflags":[],"config":0,"compile_kind":0}
