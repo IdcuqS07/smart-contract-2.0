@@ -1,0 +1,82 @@
+🚀 Deploying Linera GraphQL Service to VPS
+===========================================
+
+📋 Configuration:
+  VPS Host: 143.198.205.88
+  VPS User: root
+  Linera Port: 8080
+  Application ID: bb8c6e801d6433ed2c705861b622d943e89c759f65b1476985214ea4005a4160
+
+[0;34mStep 1: Installing Linera on VPS...[0m
+Pseudo-terminal will not be allocated because stdin is not a terminal.
+Welcome to Ubuntu 24.04.3 LTS (GNU/Linux 6.8.0-71-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/pro
+
+ System information as of Mon Dec  1 04:14:25 UTC 2025
+
+  System load:  0.0                Processes:             104
+  Usage of /:   37.0% of 32.86GB   Users logged in:       0
+  Memory usage: 32%                IPv4 address for eth0: 143.198.205.88
+  Swap usage:   0%                 IPv4 address for eth0: 10.15.0.7
+
+Expanded Security Maintenance for Applications is not enabled.
+
+0 updates can be applied immediately.
+
+Enable ESM Apps to receive additional future security updates.
+See https://ubuntu.com/esm or run: sudo pro status
+
+
+*** System restart required ***
+Installing Rust...
+info: downloading installer
+info: profile set to 'default'
+info: default host triple is x86_64-unknown-linux-gnu
+info: syncing channel updates for 'stable-x86_64-unknown-linux-gnu'
+info: latest update on 2025-11-10, rust version 1.91.1 (ed61e7d7e 2025-11-07)
+info: downloading component 'cargo'
+info: downloading component 'clippy'
+info: downloading component 'rust-docs'
+info: downloading component 'rust-std'
+info: downloading component 'rustc'
+info: downloading component 'rustfmt'
+info: installing component 'cargo'
+info: installing component 'clippy'
+info: installing component 'rust-docs'
+info: installing component 'rust-std'
+info: installing component 'rustc'
+info: installing component 'rustfmt'
+
+info: default toolchain set to 'stable-x86_64-unknown-linux-gnu'
+  stable-x86_64-unknown-linux-gnu installed - rustc 1.91.1 (ed61e7d7e 2025-11-07)
+
+
+Rust is installed now. Great!
+
+To get started you may need to restart your current shell.
+This would reload your PATH environment variable to include
+Cargo's bin directory ($HOME/.cargo/bin).
+
+To configure your current shell, you need to source
+the corresponding env file under $HOME/.cargo.
+
+This is usually done by running one of the following (note the leading DOT):
+. "$HOME/.cargo/env"            # For sh/bash/zsh/ash/dash/pdksh
+source "$HOME/.cargo/env.fish"  # For fish
+source $"($nu.home-path)/.cargo/env.nu"  # For nushell
+info: downloading component 'rust-std' for 'wasm32-unknown-unknown'
+info: installing component 'rust-std' for 'wasm32-unknown-unknown'
+Installing Linera CLI...
+    Updating git repository `https://github.com/linera-io/linera-protocol.git`
+error: package `/root/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/tests/fixtures/meta-counter/Cargo.toml` is a member of the wrong workspace
+expected: /root/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/Cargo.toml
+actual:   /root/.cargo/git/checkouts/linera-protocol-384901a671b95416/29b1249/linera-sdk/tests/fixtures/Cargo.toml
+✅ Linera installed
+
+[0;34mStep 2: Copying wallet configuration...[0m
+Copying wallet.json to VPS...
+scp: dest open "/root/.linera/": Failure
+scp: failed to upload file /Users/idcuq/Library/Application Support/linera/wallet.json to /root/.linera/
