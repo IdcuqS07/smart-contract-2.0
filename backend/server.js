@@ -82,6 +82,40 @@ app.get('/api/contract/:id', (req, res) => {
     }
 });
 
+// Get current price (real-time)
+app.get('/api/price/:symbol', async (req, res) => {
+    try {
+        const { symbol } = req.params;
+        const prices = await ai.getHistoricalData(symbol, '1m', 1);
+        res.json({ 
+            success: true, 
+            symbol,
+            price: prices[0].toFixed(2),
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
+// Get price history for chart
+app.get('/api/history/:symbol', async (req, res) => {
+    try {
+        const { symbol } = req.params;
+        const { interval = '1h', limit = 24 } = req.query;
+        const prices = await ai.getHistoricalData(symbol, interval, parseInt(limit));
+        
+        const history = prices.map((price, index) => ({
+            time: new Date(Date.now() - (prices.length - index) * 3600000).toISOString(),
+            price: price.toFixed(2)
+        }));
+        
+        res.json({ success: true, symbol, history });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // Get all contracts
 app.get('/api/contracts', (req, res) => {
     try {
