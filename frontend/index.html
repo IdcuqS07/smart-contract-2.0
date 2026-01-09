@@ -639,6 +639,9 @@
                     Symbol: ${prediction.symbol} | Action: ${prediction.action}<br>
                     Current: $${prediction.currentPrice} → Predicted: $${prediction.predictedPrice}<br>
                     Confidence: ${prediction.confidence}% | Momentum: ${prediction.momentum}%<br><br>
+                    <strong>📊 Technical Indicators:</strong><br>
+                    RSI: ${prediction.indicators.rsi} | MACD: ${prediction.indicators.macd}<br>
+                    Signals: 🟢 ${prediction.indicators.bullishSignals} Bullish | 🔴 ${prediction.indicators.bearishSignals} Bearish<br><br>
                     <strong>📝 Smart Contract:</strong><br>
                     Contract ID: #${contract.id}<br>
                     Entry: $${contract.entryPrice}<br>
