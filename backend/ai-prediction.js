@@ -1,16 +1,23 @@
 // AI Prediction Service - Simple Moving Average + Trend Analysis
 const axios = require('axios');
+require('dotenv').config();
 
 class AIPrediction {
     constructor() {
         this.binanceAPI = 'https://api.binance.com/api/v3';
+        this.apiKey = process.env.BINANCE_API_KEY;
+        this.apiSecret = process.env.BINANCE_API_SECRET;
     }
 
     // Get historical price data
     async getHistoricalData(symbol, interval = '1h', limit = 24) {
         try {
             const url = `${this.binanceAPI}/klines?symbol=${symbol}USDT&interval=${interval}&limit=${limit}`;
-            const response = await axios.get(url);
+            const config = {
+                timeout: 10000,
+                headers: this.apiKey ? { 'X-MBX-APIKEY': this.apiKey } : {}
+            };
+            const response = await axios.get(url, config);
             return response.data.map(candle => parseFloat(candle[4])); // closing prices
         } catch (error) {
             throw new Error(`Failed to fetch data: ${error.message}`);
