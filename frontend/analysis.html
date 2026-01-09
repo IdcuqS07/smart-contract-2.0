@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Analysis - Smart Contract 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a0e27;
+            color: #fff;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav a {
+            color: #a0aec0;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav a:hover, .nav a.active {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+        }
+
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .symbol-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .symbol-btn {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            color: #a0aec0;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .symbol-btn.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-color: #667eea;
+            color: #fff;
+        }
+
+        .indicator-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .indicator-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 25px;
+            text-align: center;
+        }
+
+        .indicator-label {
+            font-size: 0.9rem;
+            color: #a0aec0;
+            margin-bottom: 10px;
+        }
+
+        .indicator-value {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .indicator-status {
+            font-size: 0.85rem;
+            padding: 5px 15px;
+            border-radius: 20px;
+            display: inline-block;
+        }
+
+        .bullish { color: #00ff88; }
+        .bearish { color: #ff4444; }
+        .neutral { color: #ffc107; }
+
+        .bg-bullish { background: rgba(0, 255, 136, 0.2); color: #00ff88; }
+        .bg-bearish { background: rgba(255, 68, 68, 0.2); color: #ff4444; }
+        .bg-neutral { background: rgba(255, 193, 7, 0.2); color: #ffc107; }
+
+        .action-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .action-title {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 20px;
+        }
+
+        .action-value {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .confidence-bar {
+            width: 100%;
+            height: 30px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff88 0%, #00cc6a 100%);
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #a0aec0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🧠 AI Analysis</h1>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="analysis.html" class="active">AI Analysis</a>
+                <a href="dashboard.html">Dashboard</a>
+            </nav>
+        </div>
+
+        <!-- Symbol Selector -->
+        <div class="symbol-selector">
+            <button class="symbol-btn active" onclick="analyzeSymbol('BTC')">Bitcoin (BTC)</button>
+            <button class="symbol-btn" onclick="analyzeSymbol('ETH')">Ethereum (ETH)</button>
+            <button class="symbol-btn" onclick="analyzeSymbol('SOL')">Solana (SOL)</button>
+            <button class="symbol-btn" onclick="analyzeSymbol('BNB')">BNB</button>
+        </div>
+
+        <!-- Loading State -->
+        <div id="loading" class="loading">
+            <h2>🔄 Analyzing market data...</h2>
+        </div>
+
+        <!-- Analysis Results -->
+        <div id="results" style="display: none;">
+            <!-- Action Card -->
+            <div class="action-card">
+                <div class="action-title">AI Recommendation</div>
+                <div class="action-value" id="action">-</div>
+                <div style="font-size: 1.5rem; opacity: 0.9;">
+                    <span id="currentPrice">$0</span> → <span id="predictedPrice">$0</span>
+                </div>
+                <div class="confidence-bar">
+                    <div class="confidence-fill" id="confidenceBar">0%</div>
+                </div>
+            </div>
+
+            <!-- Technical Indicators -->
+            <div class="glass-card">
+                <h2 style="margin-bottom: 20px;">📊 Technical Indicators</h2>
+                <div class="indicator-grid">
+                    <div class="indicator-card">
+                        <div class="indicator-label">RSI (14)</div>
+                        <div class="indicator-value" id="rsi">-</div>
+                        <div class="indicator-status" id="rsiStatus">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">MACD</div>
+                        <div class="indicator-value" id="macd">-</div>
+                        <div class="indicator-status" id="macdStatus">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">SMA 10</div>
+                        <div class="indicator-value" id="sma10">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">SMA 20</div>
+                        <div class="indicator-value" id="sma20">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">EMA 12</div>
+                        <div class="indicator-value" id="ema12">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">EMA 26</div>
+                        <div class="indicator-value" id="ema26">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Signal Analysis -->
+            <div class="glass-card">
+                <h2 style="margin-bottom: 20px;">🎯 Signal Analysis</h2>
+                <div class="indicator-grid">
+                    <div class="indicator-card">
+                        <div class="indicator-label">Bullish Signals</div>
+                        <div class="indicator-value bullish" id="bullishSignals">0</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">Bearish Signals</div>
+                        <div class="indicator-value bearish" id="bearishSignals">0</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">Momentum</div>
+                        <div class="indicator-value" id="momentum">0%</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">Direction</div>
+                        <div class="indicator-value" id="direction">-</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bollinger Bands -->
+            <div class="glass-card">
+                <h2 style="margin-bottom: 20px;">📈 Bollinger Bands</h2>
+                <div class="indicator-grid">
+                    <div class="indicator-card">
+                        <div class="indicator-label">Upper Band</div>
+                        <div class="indicator-value" id="bbUpper">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">Current Price</div>
+                        <div class="indicator-value" id="bbCurrent">-</div>
+                    </div>
+                    <div class="indicator-card">
+                        <div class="indicator-label">Lower Band</div>
+                        <div class="indicator-value" id="bbLower">-</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_URL = 'http://localhost:8080';
+        let currentSymbol = 'BTC';
+
+        async function analyzeSymbol(symbol) {
+            currentSymbol = symbol;
+            
+            // Update active button
+            document.querySelectorAll('.symbol-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.includes(symbol)) {
+                    btn.classList.add('active');
+                }
+            });
+
+            // Show loading
+            document.getElementById('loading').style.display = 'block';
+            document.getElementById('results').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_URL}/api/predict`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ symbol, timeframe: '1h' })
+                });
+
+                const data = await response.json();
+
+                if (data.success) {
+                    displayAnalysis(data.prediction);
+                } else {
+                    alert('Error: ' + data.error);
+                }
+            } catch (error) {
+                alert('Connection error: ' + error.message);
+            }
+
+            document.getElementById('loading').style.display = 'none';
+            document.getElementById('results').style.display = 'block';
+        }
+
+        function displayAnalysis(pred) {
+            // Action
+            document.getElementById('action').textContent = pred.action;
+            document.getElementById('currentPrice').textContent = '$' + pred.currentPrice;
+            document.getElementById('predictedPrice').textContent = '$' + pred.predictedPrice;
+            
+            // Confidence
+            const confidence = parseFloat(pred.confidence);
+            document.getElementById('confidenceBar').style.width = confidence + '%';
+            document.getElementById('confidenceBar').textContent = confidence.toFixed(1) + '%';
+
+            // RSI
+            const rsi = parseFloat(pred.indicators.rsi);
+            document.getElementById('rsi').textContent = rsi.toFixed(2);
+            let rsiStatus = 'Neutral';
+            let rsiClass = 'bg-neutral';
+            if (rsi < 30) { rsiStatus = 'Oversold (Buy)'; rsiClass = 'bg-bullish'; }
+            if (rsi > 70) { rsiStatus = 'Overbought (Sell)'; rsiClass = 'bg-bearish'; }
+            document.getElementById('rsiStatus').textContent = rsiStatus;
+            document.getElementById('rsiStatus').className = 'indicator-status ' + rsiClass;
+
+            // MACD
+            const macd = parseFloat(pred.indicators.macd);
+            document.getElementById('macd').textContent = macd.toFixed(2);
+            const macdStatus = macd > 0 ? 'Bullish' : 'Bearish';
+            const macdClass = macd > 0 ? 'bg-bullish' : 'bg-bearish';
+            document.getElementById('macdStatus').textContent = macdStatus;
+            document.getElementById('macdStatus').className = 'indicator-status ' + macdClass;
+
+            // SMAs & EMAs
+            document.getElementById('sma10').textContent = '$' + pred.indicators.sma10;
+            document.getElementById('sma20').textContent = '$' + pred.indicators.sma20;
+            document.getElementById('ema12').textContent = '$' + pred.indicators.ema12;
+            document.getElementById('ema26').textContent = '$' + pred.indicators.ema26;
+
+            // Signals
+            document.getElementById('bullishSignals').textContent = pred.indicators.bullishSignals;
+            document.getElementById('bearishSignals').textContent = pred.indicators.bearishSignals;
+            document.getElementById('momentum').textContent = pred.momentum + '%';
+            document.getElementById('direction').textContent = pred.direction;
+
+            // Bollinger Bands
+            document.getElementById('bbUpper').textContent = '$' + pred.indicators.bollingerUpper;
+            document.getElementById('bbCurrent').textContent = '$' + pred.currentPrice;
+            document.getElementById('bbLower').textContent = '$' + pred.indicators.bollingerLower;
+        }
+
+        // Auto-load BTC on page load
+        window.addEventListener('load', () => {
+            analyzeSymbol('BTC');
+        });
+    </script>
+</body>
+</html>
