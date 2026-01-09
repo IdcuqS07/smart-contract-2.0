@@ -3,10 +3,12 @@ const express = require('express');
 const cors = require('cors');
 const AIPrediction = require('./ai-prediction');
 const SmartContractExecutor = require('./smart-contract-executor');
+const BinanceAPI = require('./binance-api');
 
 const app = express();
 const ai = new AIPrediction();
 const executor = new SmartContractExecutor();
+const binance = new BinanceAPI();
 
 app.use(cors());
 app.use(express.json());
@@ -14,6 +16,27 @@ app.use(express.json());
 // Health check
 app.get('/health', (req, res) => {
     res.json({ status: 'live', service: 'AI + Blockchain Integration' });
+});
+
+// Get current price (Binance API with caching)
+app.get('/api/price/:symbol', async (req, res) => {
+    try {
+        const { symbol } = req.params;
+        const price = await binance.getPrice(symbol);
+        
+        if (price) {
+            res.json({ 
+                success: true, 
+                symbol,
+                price: price.toFixed(2),
+                timestamp: new Date().toISOString()
+            });
+        } else {
+            res.status(503).json({ success: false, error: 'Binance API unavailable' });
+        }
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
 });
 
 // Get AI prediction
@@ -32,10 +55,7 @@ app.post('/api/contract/create', async (req, res) => {
     try {
         const { symbol, timeframe, amount, riskLevel } = req.body;
         
-        // Get AI prediction
         const prediction = await ai.predict(symbol || 'BTC', timeframe || '1h');
-        
-        // Create contract based on prediction
         const contract = executor.createContract(prediction, amount || 100, riskLevel || 'MEDIUM');
         
         res.json({ 
@@ -82,40 +102,6 @@ app.get('/api/contract/:id', (req, res) => {
     }
 });
 
-// Get current price (real-time)
-app.get('/api/price/:symbol', async (req, res) => {
-    try {
-        const { symbol } = req.params;
-        const prices = await ai.getHistoricalData(symbol, '1m', 1);
-        res.json({ 
-            success: true, 
-            symbol,
-            price: prices[0].toFixed(2),
-            timestamp: new Date().toISOString()
-        });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
-
-// Get price history for chart
-app.get('/api/history/:symbol', async (req, res) => {
-    try {
-        const { symbol } = req.params;
-        const { interval = '1h', limit = 24 } = req.query;
-        const prices = await ai.getHistoricalData(symbol, interval, parseInt(limit));
-        
-        const history = prices.map((price, index) => ({
-            time: new Date(Date.now() - (prices.length - index) * 3600000).toISOString(),
-            price: price.toFixed(2)
-        }));
-        
-        res.json({ success: true, symbol, history });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
-
 // Get all contracts
 app.get('/api/contracts', (req, res) => {
     try {
@@ -126,34 +112,14 @@ app.get('/api/contracts', (req, res) => {
     }
 });
 
-// Get current price (real-time)
-app.get('/api/price/:symbol', async (req, res) => {
-    try {
-        const { symbol } = req.params;
-        const prices = await ai.getHistoricalData(symbol, '1m', 1);
-        res.json({ 
-            success: true, 
-            symbol,
-            price: prices[0].toFixed(2),
-            timestamp: new Date().toISOString()
-        });
-    } catch (error) {
-        res.status(500).json({ success: false, error: error.message });
-    }
-});
-
 // Auto-execute flow: Predict + Create + Execute
 app.post('/api/auto-trade', async (req, res) => {
     try {
         const { symbol, timeframe, amount, riskLevel } = req.body;
         
-        // Step 1: AI Prediction
         const prediction = await ai.predict(symbol || 'BTC', timeframe || '1h');
-        
-        // Step 2: Create Contract
         const contract = executor.createContract(prediction, amount || 100, riskLevel || 'MEDIUM');
         
-        // Step 3: Auto-execute if confidence high
         if (prediction.action !== 'HOLD') {
             executor.executeContract(contract.id, prediction.currentPrice);
         }
@@ -173,6 +139,6 @@ const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
     console.log(`🚀 AI + Blockchain server running on port ${PORT}`);
     console.log(`📊 AI Prediction: http://localhost:${PORT}/api/predict`);
-    console.log(`📝 Create Contract: http://localhost:${PORT}/api/contract/create`);
+    console.log(`💰 Live Price: http://localhost:${PORT}/api/price/BTC`);
     console.log(`⚡ Auto-Trade: http://localhost:${PORT}/api/auto-trade`);
 });

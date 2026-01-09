@@ -1,39 +1,18 @@
-// AI Prediction Service - Simple Moving Average + Trend Analysis
-const axios = require('axios');
+// AI Prediction Service
+const BinanceAPI = require('./binance-api');
 require('dotenv').config();
 
 class AIPrediction {
     constructor() {
-        this.binanceAPI = 'https://api.binance.com/api/v3';
-        this.apiKey = process.env.BINANCE_API_KEY;
-        this.apiSecret = process.env.BINANCE_API_SECRET;
+        this.binance = new BinanceAPI();
     }
 
-    // Get historical price data
-    async getHistoricalData(symbol, interval = '1h', limit = 24) {
-        const endpoints = [
-            'https://api.binance.com/api/v3',
-            'https://api1.binance.com/api/v3',
-            'https://api2.binance.com/api/v3'
-        ];
-
-        for (const endpoint of endpoints) {
-            try {
-                const url = `${endpoint}/klines?symbol=${symbol}USDT&interval=${interval}&limit=${limit}`;
-                const config = {
-                    timeout: 8000,
-                    headers: this.apiKey ? { 'X-MBX-APIKEY': this.apiKey } : {}
-                };
-                console.log(`Trying ${endpoint}...`);
-                const response = await axios.get(url, config);
-                console.log(`✅ Success!`);
-                return response.data.map(candle => parseFloat(candle[4]));
-            } catch (error) {
-                console.log(`❌ ${endpoint} failed: ${error.message}`);
-            }
+    async getHistoricalData(symbol, interval = '1h', limit = 50) {
+        const prices = await this.binance.getKlines(symbol, interval, limit);
+        if (!prices) {
+            throw new Error('Failed to fetch Binance data');
         }
-        
-        throw new Error('All Binance endpoints failed. Check network/firewall.');
+        return prices;
     }
 
     // Simple Moving Average
