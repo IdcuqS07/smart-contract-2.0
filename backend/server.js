@@ -126,6 +126,22 @@ app.get('/api/contracts', (req, res) => {
     }
 });
 
+// Get current price (real-time)
+app.get('/api/price/:symbol', async (req, res) => {
+    try {
+        const { symbol } = req.params;
+        const prices = await ai.getHistoricalData(symbol, '1m', 1);
+        res.json({ 
+            success: true, 
+            symbol,
+            price: prices[0].toFixed(2),
+            timestamp: new Date().toISOString()
+        });
+    } catch (error) {
+        res.status(500).json({ success: false, error: error.message });
+    }
+});
+
 // Auto-execute flow: Predict + Create + Execute
 app.post('/api/auto-trade', async (req, res) => {
     try {
