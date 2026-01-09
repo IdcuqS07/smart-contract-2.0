@@ -11,17 +11,29 @@ class AIPrediction {
 
     // Get historical price data
     async getHistoricalData(symbol, interval = '1h', limit = 24) {
-        try {
-            const url = `${this.binanceAPI}/klines?symbol=${symbol}USDT&interval=${interval}&limit=${limit}`;
-            const config = {
-                timeout: 10000,
-                headers: this.apiKey ? { 'X-MBX-APIKEY': this.apiKey } : {}
-            };
-            const response = await axios.get(url, config);
-            return response.data.map(candle => parseFloat(candle[4])); // closing prices
-        } catch (error) {
-            throw new Error(`Failed to fetch data: ${error.message}`);
+        const endpoints = [
+            'https://api.binance.com/api/v3',
+            'https://api1.binance.com/api/v3',
+            'https://api2.binance.com/api/v3'
+        ];
+
+        for (const endpoint of endpoints) {
+            try {
+                const url = `${endpoint}/klines?symbol=${symbol}USDT&interval=${interval}&limit=${limit}`;
+                const config = {
+                    timeout: 8000,
+                    headers: this.apiKey ? { 'X-MBX-APIKEY': this.apiKey } : {}
+                };
+                console.log(`Trying ${endpoint}...`);
+                const response = await axios.get(url, config);
+                console.log(`✅ Success!`);
+                return response.data.map(candle => parseFloat(candle[4]));
+            } catch (error) {
+                console.log(`❌ ${endpoint} failed: ${error.message}`);
+            }
         }
+        
+        throw new Error('All Binance endpoints failed. Check network/firewall.');
     }
 
     // Simple Moving Average

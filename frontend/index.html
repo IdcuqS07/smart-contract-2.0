@@ -401,6 +401,37 @@
             </div>
         </div>
 
+        <!-- Live Prices -->
+        <div class="glass-card">
+            <h2 style="margin-bottom: 20px;">💰 Live Prices</h2>
+            <div class="status-grid">
+                <div class="status-card" style="cursor: pointer;" onclick="document.getElementById('symbol').value='BTC'">
+                    <div class="status-icon">₿</div>
+                    <div class="status-title">Bitcoin</div>
+                    <div class="status-value" id="btc-price" style="font-size: 1.3rem;">Loading...</div>
+                    <small id="btc-change" style="color: #00ff88;">+0.00%</small>
+                </div>
+                <div class="status-card" style="cursor: pointer;" onclick="document.getElementById('symbol').value='ETH'">
+                    <div class="status-icon">Ξ</div>
+                    <div class="status-title">Ethereum</div>
+                    <div class="status-value" id="eth-price" style="font-size: 1.3rem;">Loading...</div>
+                    <small id="eth-change" style="color: #00ff88;">+0.00%</small>
+                </div>
+                <div class="status-card" style="cursor: pointer;" onclick="document.getElementById('symbol').value='SOL'">
+                    <div class="status-icon">◎</div>
+                    <div class="status-title">Solana</div>
+                    <div class="status-value" id="sol-price" style="font-size: 1.3rem;">Loading...</div>
+                    <small id="sol-change" style="color: #00ff88;">+0.00%</small>
+                </div>
+                <div class="status-card" style="cursor: pointer;" onclick="document.getElementById('symbol').value='BNB'">
+                    <div class="status-icon">🔶</div>
+                    <div class="status-title">BNB</div>
+                    <div class="status-value" id="bnb-price" style="font-size: 1.3rem;">Loading...</div>
+                    <small id="bnb-change" style="color: #00ff88;">+0.00%</small>
+                </div>
+            </div>
+        </div>
+
         <!-- Hero Section - Auto Trade -->
         <div class="hero-section">
             <div class="hero-content">
@@ -641,7 +672,40 @@
             document.getElementById('ai-status').textContent = 'LIVE';
             document.getElementById('blockchain-status').textContent = 'LIVE';
             document.getElementById('oracle-status').textContent = 'LIVE';
+            
+            // Load live prices
+            loadLivePrices();
+            setInterval(loadLivePrices, 10000); // Update every 10 seconds
         });
+
+        async function loadLivePrices() {
+            const symbols = ['BTC', 'ETH', 'SOL', 'BNB'];
+            
+            for (const symbol of symbols) {
+                try {
+                    const response = await fetch(`${API_URL}/api/price/${symbol}`);
+                    const data = await response.json();
+                    
+                    if (data.success) {
+                        const priceEl = document.getElementById(`${symbol.toLowerCase()}-price`);
+                        const changeEl = document.getElementById(`${symbol.toLowerCase()}-change`);
+                        
+                        const oldPrice = parseFloat(priceEl.textContent.replace(/[^0-9.]/g, '')) || 0;
+                        const newPrice = parseFloat(data.price);
+                        
+                        priceEl.textContent = `$${newPrice.toLocaleString()}`;
+                        
+                        if (oldPrice > 0) {
+                            const change = ((newPrice - oldPrice) / oldPrice * 100).toFixed(2);
+                            changeEl.textContent = `${change >= 0 ? '+' : ''}${change}%`;
+                            changeEl.style.color = change >= 0 ? '#00ff88' : '#ff4444';
+                        }
+                    }
+                } catch (error) {
+                    console.error(`Failed to load ${symbol} price:`, error);
+                }
+            }
+        }
     </script>
 </body>
 </html>
