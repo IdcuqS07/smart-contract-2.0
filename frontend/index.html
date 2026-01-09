@@ -580,66 +580,48 @@
 
             btn.disabled = true;
             btn.textContent = '⏳ Processing...';
-            
-            // Step 1: AI Analysis
-            showResult('🤖 Step 1/3: AI analyzing market data...', 'loading');
-            await sleep(1000);
-            
-            const mockPrice = (Math.random() * 50000 + 20000).toFixed(2);
-            const momentum = (Math.random() * 10 - 5).toFixed(2);
-            const predictedPrice = (parseFloat(mockPrice) * (1 + momentum/100)).toFixed(2);
-            const confidence = (Math.random() * 20 + 75).toFixed(1);
-            const direction = momentum > 0 ? 'UP ⬆️' : 'DOWN ⬇️';
-            const action = confidence > 70 ? (momentum > 0 ? 'BUY' : 'SELL') : 'HOLD';
-            
-            showResult(`
-                <strong>🤖 AI Prediction Complete</strong><br><br>
-                Current Price: $${mockPrice}<br>
-                Predicted Price: $${predictedPrice}<br>
-                Direction: ${direction}<br>
-                Confidence: ${confidence}%<br>
-                Action: <strong>${action}</strong>
-            `, 'loading');
-            await sleep(1500);
-            
-            // Step 2: Create Contract
-            showResult(`
-                <strong>📝 Step 2/3: Creating Smart Contract...</strong><br><br>
-                Action: ${action} ${symbol}<br>
-                Entry: $${mockPrice}
-            `, 'loading');
-            await sleep(1000);
-            
-            const contractId = Math.floor(Math.random() * 10000);
-            const riskPercent = {'LOW': 2, 'MEDIUM': 5, 'HIGH': 10}[riskLevel];
-            const stopLoss = (parseFloat(mockPrice) * (1 - riskPercent/100)).toFixed(2);
-            const takeProfit = (parseFloat(mockPrice) * (1 + riskPercent*1.5/100)).toFixed(2);
-            
-            showResult(`
-                <strong>⚡ Step 3/3: Executing on Blockchain...</strong><br><br>
-                Contract ID: #${contractId}<br>
-                Stop-Loss: $${stopLoss}<br>
-                Take-Profit: $${takeProfit}
-            `, 'loading');
-            await sleep(1500);
-            
-            // Step 3: Complete
-            showResult(`
-                <strong>✅ Auto-Trade Complete!</strong><br><br>
-                <strong>🤖 AI Prediction:</strong><br>
-                Symbol: ${symbol} | Action: ${action}<br>
-                Current: $${mockPrice} → Predicted: $${predictedPrice}<br>
-                Confidence: ${confidence}% | Momentum: ${momentum}%<br><br>
-                <strong>📝 Smart Contract:</strong><br>
-                Contract ID: #${contractId}<br>
-                Entry: $${mockPrice}<br>
-                Stop-Loss: $${stopLoss} (-${riskPercent}%)<br>
-                Take-Profit: $${takeProfit} (+${(riskPercent*1.5).toFixed(1)}%)<br>
-                Amount: $${amount}<br><br>
-                <strong>⚡ Status:</strong> EXECUTED on Aleo Blockchain<br>
-                🕒 ${new Date().toLocaleString()}
-            `, 'success');
-            
+            showResult('🤖 Connecting to backend...', 'loading');
+
+            try {
+                // Call real backend API
+                const response = await fetch(`${API_URL}/api/auto-trade`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ symbol, timeframe, amount, riskLevel })
+                });
+
+                const data = await response.json();
+
+                if (!data.success) {
+                    showResult(`❌ Error: ${data.error}`, 'error');
+                    btn.disabled = false;
+                    btn.textContent = '🚀 Start Auto-Trade';
+                    return;
+                }
+
+                const { prediction, contract } = data;
+                const riskPercent = {'LOW': 2, 'MEDIUM': 5, 'HIGH': 10}[riskLevel];
+
+                showResult(`
+                    <strong>✅ Auto-Trade Complete!</strong><br><br>
+                    <strong>🤖 AI Prediction:</strong><br>
+                    Symbol: ${prediction.symbol} | Action: ${prediction.action}<br>
+                    Current: $${prediction.currentPrice} → Predicted: $${prediction.predictedPrice}<br>
+                    Confidence: ${prediction.confidence}% | Momentum: ${prediction.momentum}%<br><br>
+                    <strong>📝 Smart Contract:</strong><br>
+                    Contract ID: #${contract.id}<br>
+                    Entry: $${contract.entryPrice}<br>
+                    Stop-Loss: $${contract.stopLoss} (-${riskPercent}%)<br>
+                    Take-Profit: $${contract.takeProfit} (+${(riskPercent*1.5).toFixed(1)}%)<br>
+                    Amount: $${amount}<br><br>
+                    <strong>⚡ Status:</strong> ${contract.status} on Aleo Blockchain<br>
+                    🕒 ${new Date().toLocaleString()}
+                `, 'success');
+
+            } catch (error) {
+                showResult(`❌ Connection Error: ${error.message}<br><br>Make sure backend is running on port 8080`, 'error');
+            }
+
             btn.disabled = false;
             btn.textContent = '🚀 Start Auto-Trade';
         }
