@@ -20,13 +20,22 @@ class AIPrediction {
             console.log('Binance failed, trying CoinGecko...');
         }
         
-        // Fallback to CoinGecko
+        // Fallback to CoinGecko with caching
         const coinIds = { 'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'BNB': 'binancecoin' };
         const coinId = coinIds[symbol];
         
         if (!coinId) {
             throw new Error(`Unsupported symbol: ${symbol}`);
         }
+        
+        // Check cache first
+        const cacheKey = `coingecko_${coinId}_${limit}`;
+        if (this.binance.isCacheValid(cacheKey)) {
+            return this.binance.cache.get(cacheKey).prices;
+        }
+        
+        // Add delay to avoid rate limit
+        await new Promise(resolve => setTimeout(resolve, 1000));
         
         const response = await axios.get(
             `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`,
@@ -37,6 +46,10 @@ class AIPrediction {
         );
         
         const prices = response.data.prices.slice(-limit).map(p => p[1]);
+        
+        // Cache for 60 seconds
+        this.binance.cache.set(cacheKey, { prices, timestamp: Date.now() });
+        
         return prices;
     }
 

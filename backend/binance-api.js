@@ -5,10 +5,10 @@ class BinanceAPI {
     constructor() {
         this.baseURL = 'https://api.binance.com/api/v3';
         this.cache = new Map();
-        this.cacheDuration = 10000; // 10 seconds
+        this.cacheDuration = 60000; // 60 seconds (lebih lama)
         this.apiAvailable = true;
         this.lastCheckTime = 0;
-        this.checkInterval = 60000; // 60 seconds
+        this.checkInterval = 60000;
     }
 
     isCacheValid(key) {
