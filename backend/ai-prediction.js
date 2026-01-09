@@ -8,33 +8,36 @@ class AIPrediction {
     }
 
     async getHistoricalData(symbol, interval = '1h', limit = 50) {
-        // Try Binance first
-        const prices = await this.binance.getKlines(symbol, interval, limit);
-        if (prices && prices.length > 0) {
-            return prices;
-        }
-        
-        // Fallback: Generate mock data based on CoinGecko current price
         const axios = require('axios');
-        const coinIds = { 'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'BNB': 'binancecoin' };
-        const coinId = coinIds[symbol] || 'bitcoin';
         
+        // Try Binance first
         try {
-            const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`, {
-                timeout: 3000
-            });
-            const currentPrice = response.data[coinId].usd;
-            
-            // Generate historical data around current price
-            const mockPrices = [];
-            for (let i = 0; i < limit; i++) {
-                const variation = (Math.random() - 0.5) * currentPrice * 0.02;
-                mockPrices.push(currentPrice + variation);
+            const prices = await this.binance.getKlines(symbol, interval, limit);
+            if (prices && prices.length > 0) {
+                return prices;
             }
-            return mockPrices;
-        } catch (error) {
-            throw new Error('All data sources failed');
+        } catch (e) {
+            console.log('Binance failed, trying CoinGecko...');
         }
+        
+        // Fallback to CoinGecko
+        const coinIds = { 'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'BNB': 'binancecoin' };
+        const coinId = coinIds[symbol];
+        
+        if (!coinId) {
+            throw new Error(`Unsupported symbol: ${symbol}`);
+        }
+        
+        const response = await axios.get(
+            `https://api.coingecko.com/api/v3/coins/${coinId}/market_chart`,
+            {
+                params: { vs_currency: 'usd', days: 2 },
+                timeout: 5000
+            }
+        );
+        
+        const prices = response.data.prices.slice(-limit).map(p => p[1]);
+        return prices;
     }
 
     // Simple Moving Average
