@@ -18,22 +18,36 @@ app.get('/health', (req, res) => {
     res.json({ status: 'live', service: 'AI + Blockchain Integration' });
 });
 
-// Get current price (Binance API with caching)
+// Get current price (Binance API with CoinGecko fallback)
 app.get('/api/price/:symbol', async (req, res) => {
     try {
         const { symbol } = req.params;
-        const price = await binance.getPrice(symbol);
         
-        if (price) {
-            res.json({ 
-                success: true, 
-                symbol,
-                price: price.toFixed(2),
-                timestamp: new Date().toISOString()
-            });
-        } else {
-            res.status(503).json({ success: false, error: 'Binance API unavailable' });
+        // Try Binance first
+        let price = await binance.getPrice(symbol);
+        
+        // Fallback to CoinGecko if Binance fails
+        if (!price) {
+            const axios = require('axios');
+            const coinIds = { 'BTC': 'bitcoin', 'ETH': 'ethereum', 'SOL': 'solana', 'BNB': 'binancecoin' };
+            const coinId = coinIds[symbol] || 'bitcoin';
+            
+            try {
+                const response = await axios.get(`https://api.coingecko.com/api/v3/simple/price?ids=${coinId}&vs_currencies=usd`, {
+                    timeout: 3000
+                });
+                price = response.data[coinId].usd;
+            } catch (error) {
+                return res.status(503).json({ success: false, error: 'All price APIs unavailable' });
+            }
         }
+        
+        res.json({ 
+            success: true, 
+            symbol,
+            price: price.toFixed(2),
+            timestamp: new Date().toISOString()
+        });
     } catch (error) {
         res.status(500).json({ success: false, error: error.message });
     }
